@@ -4,27 +4,36 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 public class Mentality extends JPanel implements ActionListener {
     private static JFrame frame;
+    private User user;
+
+    private JTextArea uname;
+    private JPasswordField pass;
+    private JButton login, register;
 
     public Mentality() {
         super();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JLabel logo = new JLabel(new ImageIcon("src/main/resources/logo.png", "Mentality Logo"));
-        JTextArea uname = new JTextArea("username"), pass = new JTextArea("password");
-        JButton login = new JButton("Login"), register = new JButton("Register");
+        uname = new JTextArea("username");
+        pass = new JPasswordField("password");
         uname.setMaximumSize(new Dimension(200, 30));
         pass.setMaximumSize(new Dimension(200, 30));
+        login = new JButton("Login");
+        login.addActionListener(this);
+        login.setActionCommand("login");
+        register = new JButton("Register");
+        register.addActionListener(this);
+        register.setActionCommand("register");
         add(center(logo));
 
         add(uname);
         add(pass);
         add(center(login));
+        add(center(register));
     }
 
     private JComponent center(JComponent c) {
@@ -59,20 +68,17 @@ public class Mentality extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("exit")) {
-            System.exit(0);
+        if (e.getActionCommand().equals("login")) {
+            user = new User(uname.getText(), Password.getHashedPassword(pass));
+            System.out.println(uname.getText());
+            System.out.println(Password.getHashedPassword(pass));
+            pass.setText("");
         }
-        if (e.getActionCommand().equals("settings")) {
-            System.err.println("open settings menu");
-        }
-        if (e.getActionCommand().equals("help")) {
-            try {
-                Desktop.getDesktop().browse(new URI("https://github.com/jeremymeadows/Mentality"));
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (URISyntaxException ex) {
-                ex.printStackTrace();
-            }
+        if (e.getActionCommand().equals("register")) {
+            user = new User(uname.getText(), Password.getHashedPassword(pass));
+            System.out.println(uname.getText());
+            System.out.println(Password.getHashedPassword(pass));
+            pass.setText("");
         }
     }
 }

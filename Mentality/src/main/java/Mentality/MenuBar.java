@@ -1,10 +1,16 @@
 package Mentality;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
-public class MenuBar extends JMenuBar {
+class MenuBar extends JMenuBar implements ActionListener {
     private JMenuBar menuBar;
 
     private MenuBar() {
@@ -16,16 +22,16 @@ public class MenuBar extends JMenuBar {
         menu.setMnemonic(KeyEvent.VK_F);
         menu.getAccessibleContext().setAccessibleDescription("Mentality Menu");
 
-        menuItem = new JMenuItem("Exit", KeyEvent.VK_X);
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
-        menuItem.setActionCommand("exit");
-        menuItem.addActionListener(new Mentality());
-        menu.add(menuItem);
-
         menuItem = new JMenuItem("Settings", KeyEvent.VK_T);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_COMMA, InputEvent.CTRL_DOWN_MASK));
         menuItem.setActionCommand("settings");
-        menuItem.addActionListener(new Mentality());
+        menuItem.addActionListener(this);
+        menu.add(menuItem);
+
+        menuItem = new JMenuItem("Exit", KeyEvent.VK_X);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
+        menuItem.setActionCommand("exit");
+        menuItem.addActionListener(this);
         menu.add(menuItem);
 
         menuBar.add(menu);
@@ -36,13 +42,32 @@ public class MenuBar extends JMenuBar {
 
         menuItem = new JMenuItem("Help", KeyEvent.VK_H);
         menuItem.setActionCommand("help");
-        menuItem.addActionListener(new Mentality());
+        menuItem.addActionListener(this);
         menu.add(menuItem);
 
         menuBar.add(menu);
     }
 
-    public static JMenuBar newMenuBar() {
+    static JMenuBar newMenuBar() {
         return new MenuBar().menuBar;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("settings")) {
+            System.err.println("open settings menu");
+        }
+        if (e.getActionCommand().equals("exit")) {
+            System.exit(0);
+        }
+        if (e.getActionCommand().equals("help")) {
+            try {
+                Desktop.getDesktop().browse(new URI("https://github.com/jeremymeadows/Mentality"));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (URISyntaxException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 }
