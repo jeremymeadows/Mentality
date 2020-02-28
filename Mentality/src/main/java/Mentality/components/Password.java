@@ -1,4 +1,4 @@
-package Mentality;
+package Mentality.components;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -6,7 +6,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import javax.swing.*;
 import java.util.Random;
 
-class Password {
+public class Password {
     private String passHash;
 
     private Password(JPasswordField p) {
@@ -21,7 +21,7 @@ class Password {
         passHash = passHash.substring(0, 32);
     }
 
-    static String getHashedPassword(JPasswordField p) {
+    public static String getHashedPassword(JPasswordField p) {
         return new Password(p).passHash;
     }
 }

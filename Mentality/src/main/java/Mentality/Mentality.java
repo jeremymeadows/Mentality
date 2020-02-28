@@ -1,5 +1,11 @@
 package Mentality;
 
+import Mentality.components.MenuBar;
+import Mentality.components.Password;
+import Mentality.components.User;
+import Mentality.windows.Registration;
+import static Mentality.utils.CustomUtilities.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -36,11 +42,6 @@ public class Mentality extends JPanel implements ActionListener {
         add(center(register));
     }
 
-    private JComponent center(JComponent c) {
-        c.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        return c;
-    }
-
     private static void startGUI() {
         frame = new JFrame("Mentality");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,10 +76,12 @@ public class Mentality extends JPanel implements ActionListener {
             pass.setText("");
         }
         if (e.getActionCommand().equals("register")) {
-            user = new User(uname.getText(), Password.getHashedPassword(pass));
-            System.out.println(uname.getText());
-            System.out.println(Password.getHashedPassword(pass));
-            pass.setText("");
+            javax.swing.SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new Registration().run();
+                }
+            });
         }
     }
 }

@@ -1,4 +1,4 @@
-package Mentality;
+package Mentality.utils;
 
 import javax.swing.*;
 import javax.swing.SpringLayout;

@@ -1,4 +1,6 @@
-package Mentality;
+package Mentality.components;
+
+import static Mentality.utils.CustomUtilities.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +12,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-class MenuBar extends JMenuBar implements ActionListener {
+public class MenuBar extends JMenuBar implements ActionListener {
     private JMenuBar menuBar;
 
     private MenuBar() {
@@ -22,16 +24,11 @@ class MenuBar extends JMenuBar implements ActionListener {
         menu.setMnemonic(KeyEvent.VK_F);
         menu.getAccessibleContext().setAccessibleDescription("Mentality Menu");
 
-        menuItem = new JMenuItem("Settings", KeyEvent.VK_T);
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_COMMA, InputEvent.CTRL_DOWN_MASK));
-        menuItem.setActionCommand("settings");
-        menuItem.addActionListener(this);
+        menuItem = initJMenuItem("Settings", this, KeyEvent.VK_T,
+                KeyStroke.getKeyStroke(KeyEvent.VK_COMMA, InputEvent.CTRL_DOWN_MASK));
         menu.add(menuItem);
-
-        menuItem = new JMenuItem("Exit", KeyEvent.VK_X);
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
-        menuItem.setActionCommand("exit");
-        menuItem.addActionListener(this);
+        menuItem = initJMenuItem("Exit", this, KeyEvent.VK_X,
+                KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
         menu.add(menuItem);
 
         menuBar.add(menu);
@@ -40,15 +37,13 @@ class MenuBar extends JMenuBar implements ActionListener {
         menu.setMnemonic(KeyEvent.VK_H);
         menu.getAccessibleContext().setAccessibleDescription("Help Menu");
 
-        menuItem = new JMenuItem("Help", KeyEvent.VK_H);
-        menuItem.setActionCommand("help");
-        menuItem.addActionListener(this);
+        menuItem = initJMenuItem("Help", this, KeyEvent.VK_H);
         menu.add(menuItem);
 
         menuBar.add(menu);
     }
 
-    static JMenuBar newMenuBar() {
+    public static JMenuBar newMenuBar() {
         return new MenuBar().menuBar;
     }
 
