@@ -55,4 +55,12 @@ public class Runner extends Thread implements Runnable {
             //System.exit(1);
         }
     }
+
+    public static void cleanup() {
+        try {
+            db.close();
+        } catch (SQLException ex) {
+            System.err.println("failed to close JDBC connection");
+        }
+    }
 }

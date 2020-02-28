@@ -7,7 +7,7 @@ public class Database {
     private static Statement st;
 
     public Database() throws SQLException {
-        con = DriverManager.getConnection("localhost", "uname", "password");
+        con = DriverManager.getConnection("jdbc:postgresql:test", "mentality", "postgresql");
         st = con.createStatement();
     }
 

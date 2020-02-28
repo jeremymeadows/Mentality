@@ -1,5 +1,6 @@
 package Mentality.components;
 
+import Mentality.Runner;
 import static Mentality.utils.CustomUtilities.*;
 
 import javax.swing.*;
@@ -53,6 +54,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
             System.err.println("open settings menu");
         }
         if (e.getActionCommand().equals("exit")) {
+            Runner.cleanup();
             System.exit(0);
         }
         if (e.getActionCommand().equals("help")) {
