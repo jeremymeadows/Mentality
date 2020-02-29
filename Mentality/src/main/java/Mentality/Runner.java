@@ -79,7 +79,7 @@ public class Runner extends Thread implements Runnable {
             initDB();
         } catch (SQLException ex) {
             System.err.println("cannot establish connection to database");
-            //System.exit(1);
+            System.exit(1);
         }
     }
 
@@ -93,6 +93,7 @@ public class Runner extends Thread implements Runnable {
             db.close();
         } catch (SQLException ex) {
             System.err.println("failed to close JDBC connection");
+            System.exit(1);
         }
     }
 }

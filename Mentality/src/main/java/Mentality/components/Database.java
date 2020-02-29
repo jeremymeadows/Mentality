@@ -7,7 +7,7 @@ public class Database {
     private static Statement st;
 
     public Database() throws SQLException {
-        con = DriverManager.getConnection("jdbc:postgresql:test", "mentality", "postgresql");
+        con = DriverManager.getConnection("jdbc:postgresql://jeremymeadows.duckdns.org:5432/mentality", "mentality", "mentalityadmin");
         st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
     }
 
