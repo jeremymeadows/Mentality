@@ -8,14 +8,14 @@ public class Database {
 
     public Database() throws SQLException {
         con = DriverManager.getConnection("jdbc:postgresql:test", "mentality", "postgresql");
-        st = con.createStatement();
+        st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
     }
 
     public void close() throws SQLException {
         con.close();
     }
 
-    public void query(String q) throws SQLException {
-        ResultSet res = st.executeQuery(q);
+    public ResultSet query(String q) throws SQLException {
+        return st.executeQuery(q);
     }
 }

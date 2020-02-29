@@ -15,7 +15,15 @@ public class User {
         this.uname = uname;
     }
 
-    public String[] serialize() {
-        return null;
-    }
+    public String getEmail() { return email; }
+    public String getPass() { return pass; }
+    public int getId() { return id; }
+    public String getName() { return name; }
+    public String getUname() { return uname; }
+
+    public void setEmail(String email) { this.email = email; }
+    public void setPass(String pass) { this.pass = pass; }
+    public void setId(int id) { this.id = id; }
+    public void setName(String name) { this.name = name; }
+    public void setUname(String uname) { this.uname = uname; }
 }

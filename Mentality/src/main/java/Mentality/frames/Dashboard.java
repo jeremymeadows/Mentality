@@ -1,5 +1,6 @@
 package Mentality.frames;
 
+import Mentality.Runner;
 import static Mentality.utils.CustomUtilities.*;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
     public Dashboard() {
         super();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        JLabel logo = new JLabel("dashboard");
+        JLabel logo = new JLabel("Hello, " + Runner.getUser().getUname());
         add(center(logo));
     }
 

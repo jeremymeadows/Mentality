@@ -2,6 +2,7 @@ package Mentality;
 
 import Mentality.components.Password;
 import Mentality.components.User;
+import Mentality.frames.Dashboard;
 import Mentality.frames.Registration;
 import static Mentality.utils.CustomUtilities.*;
 import static Mentality.utils.SpringUtilities.*;
@@ -11,7 +12,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Mentality extends JPanel implements ActionListener, FocusListener, KeyListener {
-    private User user;
 
     private JTextField email;
     private JPasswordField pass;
@@ -53,7 +53,11 @@ public class Mentality extends JPanel implements ActionListener, FocusListener, 
     }
 
     private void login() {
-        user = new User(email.getText(), Password.getHashedPassword(pass));
+        if (Runner.validateLogin(new User(email.getText(), Password.getHashedPassword(pass)))) {
+            Runner.changeFrame(new Dashboard());
+        } else {
+            System.err.println("login failed");
+        }
         System.out.println(email.getText());
         System.out.println(Password.getHashedPassword(pass));
         pass.setText("");
