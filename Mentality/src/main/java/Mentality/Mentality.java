@@ -4,6 +4,7 @@ import Mentality.components.Password;
 import Mentality.components.User;
 import Mentality.frames.Dashboard;
 import Mentality.frames.Registration;
+
 import static Mentality.utils.CustomUtilities.*;
 import static Mentality.utils.SpringUtilities.*;
 
@@ -12,10 +13,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Mentality extends JPanel implements ActionListener, FocusListener, KeyListener {
-
     private JTextField email;
     private JPasswordField pass;
-    private JButton login, register;
 
     public Mentality() {
         super();
@@ -42,8 +41,8 @@ public class Mentality extends JPanel implements ActionListener, FocusListener, 
         makeGrid(erow, 1, 2, 0,0,0,0);
         makeGrid(prow, 1, 2, 0,0,0,0);
 
-        login = initJButton("Login", this);
-        register = initJButton("Register", this);
+        JButton login = initJButton("Login", this);
+        JButton register = initJButton("Register", this);
 
         add(center(logo));
         add(erow);
@@ -53,14 +52,16 @@ public class Mentality extends JPanel implements ActionListener, FocusListener, 
     }
 
     private void login() {
-        if (Runner.validateLogin(new User(email.getText(), Password.getHashedPassword(pass)))) {
+        String passkey = Password.toKey(email.getText(), pass.getPassword());
+        pass.setText("");
+        if (Runner.validateLogin(new User(email.getText(), Password.hashPassword(passkey)))) {
             Runner.changeFrame(new Dashboard());
         } else {
             System.err.println("login failed");
         }
-        System.out.println(email.getText());
-        System.out.println(Password.getHashedPassword(pass));
-        pass.setText("");
+        System.out.println("email: " + email.getText());
+        System.out.println("password: " + Password.hashPassword(passkey));
+        System.out.println("id: " + Password.hashPassword(passkey).hashCode());
     }
 
     private static void startGUI() {

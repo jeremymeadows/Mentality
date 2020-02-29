@@ -28,6 +28,9 @@ public class MenuBar extends JMenuBar implements ActionListener {
         menuItem = initJMenuItem("Settings", this, KeyEvent.VK_T,
                 KeyStroke.getKeyStroke(KeyEvent.VK_COMMA, InputEvent.CTRL_DOWN_MASK));
         menu.add(menuItem);
+        menuItem = initJMenuItem("Logout", this, KeyEvent.VK_L,
+                KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_DOWN_MASK));
+        menu.add(menuItem);
         menuItem = initJMenuItem("Exit", this, KeyEvent.VK_X,
                 KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK));
         menu.add(menuItem);
@@ -53,6 +56,9 @@ public class MenuBar extends JMenuBar implements ActionListener {
         if (e.getActionCommand().equals("settings")) {
             System.err.println("open settings menu");
         }
+        if (e.getActionCommand().equals("logout")) {
+            Runner.logout();
+        }
         if (e.getActionCommand().equals("exit")) {
             Runner.cleanup();
             System.exit(0);
@@ -60,9 +66,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
         if (e.getActionCommand().equals("help")) {
             try {
                 Desktop.getDesktop().browse(new URI("https://github.com/jeremymeadows/Mentality"));
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (URISyntaxException ex) {
+            } catch (IOException | URISyntaxException ex) {
                 ex.printStackTrace();
             }
         }

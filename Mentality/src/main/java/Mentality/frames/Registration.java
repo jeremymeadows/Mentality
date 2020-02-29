@@ -11,11 +11,10 @@ import java.awt.event.*;
 import java.util.Arrays;
 
 public class Registration extends JPanel implements Runnable, ActionListener, FocusListener, KeyListener {
-    private static JFrame frame;
+    private static JFrame popup;
 
     private JTextField email, uname, name;
     private JPasswordField pass, confpass;
-    private JButton submit, cancel;
 
     public Registration() {
         super();
@@ -43,8 +42,8 @@ public class Registration extends JPanel implements Runnable, ActionListener, Fo
         confpass.addKeyListener(this);
         confpass.setMaximumSize(new Dimension(200, 30));
 
-        submit = initJButton("Submit", this);
-        cancel = initJButton("Cancel", this);
+        JButton submit = initJButton("Submit", this);
+        JButton cancel = initJButton("Cancel", this);
 
         add(email);
         add(uname);
@@ -57,6 +56,7 @@ public class Registration extends JPanel implements Runnable, ActionListener, Fo
 
     private void register() {
         boolean success = true;
+        String passkey = Password.toKey(email.getText(), pass.getPassword());
         if (!email.getText().matches("\\b[A-Za-z0-9!#$%&'*+-/=?^_`.{|}~]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b")) {
             System.err.println("invalid email");
             success = false;
@@ -70,9 +70,10 @@ public class Registration extends JPanel implements Runnable, ActionListener, Fo
             success = false;
         }
 
-        if (success) {
+        if (success && Runner.validateRegistration(new User
+                (email.getText(), Password.hashPassword(passkey), name.getText(), uname.getText()))) {
             Runner.changeFrame(new Dashboard());
-            frame.dispose();
+            popup.dispose();
         } else {
             pass.setText("");
             confpass.setText("");
@@ -80,23 +81,23 @@ public class Registration extends JPanel implements Runnable, ActionListener, Fo
     }
 
     private static void startGUI() {
-        frame = new JFrame("Register");
-        frame.setAlwaysOnTop(true);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        popup = new JFrame("Register");
+        popup.setAlwaysOnTop(true);
+        popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        Registration mainWindow = new Registration();
-        mainWindow.setOpaque(true);
-        frame.setContentPane(mainWindow);
+        Registration regWindow = new Registration();
+        regWindow.setOpaque(true);
+        popup.setContentPane(regWindow);
 
-        frame.pack();
-        frame.setSize(new Dimension(720, 480));
-        frame.setLocation(new Point(
+        popup.pack();
+        popup.setSize(new Dimension(720, 480));
+        popup.setLocation(new Point(
                 Toolkit.getDefaultToolkit().getScreenSize().width/2-360,
                 Toolkit.getDefaultToolkit().getScreenSize().height/2-240));
-        frame.setVisible(true);
+        popup.setVisible(true);
     }
     public void run() {
-        if (frame == null || !frame.isVisible()) {
+        if (popup == null || !popup.isVisible()) {
             startGUI();
         }
     }
@@ -107,7 +108,7 @@ public class Registration extends JPanel implements Runnable, ActionListener, Fo
             register();
         }
         if (e.getActionCommand().equals("cancel")) {
-            frame.dispose();
+            popup.dispose();
         }
     }
 

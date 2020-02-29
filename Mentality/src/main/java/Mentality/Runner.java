@@ -34,11 +34,11 @@ public class Runner extends Thread implements Runnable {
     }
 
     public static boolean validateLogin(User u) {
-        String q = "SELECT * FROM users WHERE password = '" + u.getPass() + "';";
+        String q = "SELECT * FROM users WHERE id = '" + u.getId() + "';";
         try {
-            ResultSet r = query(q);
+            ResultSet r = db.query(q);
             if (r.next()) {
-                if (r.getString("email").equals(u.getEmail())) {
+                if (r.getString("email").equals(u.getEmail()) && r.getString("password").equals(u.getPass())) {
                     u.setName(r.getString("name"));
                     u.setUname(r.getString("username"));
                     u.setId(r.getInt("id"));
@@ -47,23 +47,28 @@ public class Runner extends Thread implements Runnable {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println("user not found");
+            System.err.println("bad connection");
         }
         return false;
     }
     public static boolean validateRegistration(User u) {
-        String q = "SELECT * FROM users WHERE password = '" + u.getPass() + "';";
+        String q = "SELECT * FROM users WHERE email = '" + u.getEmail() + "';";
         try {
-            ResultSet r = query(q);
-
+            ResultSet r = db.query(q);
+            while (r.next()) {
+                if (r.getString("email").equals(u.getEmail())) {
+                    System.err.println("account already registered");
+                    return false;
+                }
+            }
+            q = u.getEmail() + "','" + u.getPass() + "'," + Integer.toUnsignedLong(u.getId()) + ",'" + u.getName() + "','" + u.getUname();
+            db.update("INSERT INTO users (email, password, id, name, username) VALUES ('" + q + "');");
+            user = u;
         } catch (SQLException ex) {
-            System.err.println("user not found");
+            System.err.println("bad connection");
+            return false;
         }
-        return false;
-    }
-
-    public static ResultSet query(String q) throws SQLException {
-        return db.query(q);
+        return true;
     }
 
     @Override
@@ -76,6 +81,11 @@ public class Runner extends Thread implements Runnable {
             System.err.println("cannot establish connection to database");
             //System.exit(1);
         }
+    }
+
+    public static void logout() {
+        user = null;
+        changeFrame(new Mentality());
     }
 
     public static void cleanup() {

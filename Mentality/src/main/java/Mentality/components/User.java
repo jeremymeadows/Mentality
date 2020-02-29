@@ -7,7 +7,7 @@ public class User {
     public User(String email, String pass) {
         this.email = email;
         this.pass = pass;
-        id = email.hashCode();
+        id = pass.hashCode();
     }
     public User(String email, String pass, String name, String uname) {
         this(email, pass);
