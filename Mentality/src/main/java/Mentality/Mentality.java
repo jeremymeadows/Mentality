@@ -4,10 +4,9 @@ import Mentality.components.Password;
 import Mentality.components.User;
 import Mentality.frames.Dashboard;
 import Mentality.frames.Registration;
-
+import Mentality.frames.Template;
 import static Mentality.utils.CustomUtilities.*;
 import static Mentality.utils.SpringUtilities.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -15,6 +14,7 @@ import java.awt.event.*;
 public class Mentality extends JPanel implements ActionListener, FocusListener, KeyListener {
     private JTextField email;
     private JPasswordField pass;
+    private static final boolean DEBUG = true;
 
     public Mentality() {
         super();
@@ -64,12 +64,33 @@ public class Mentality extends JPanel implements ActionListener, FocusListener, 
         System.out.println("id: " + Password.hashPassword(passkey).hashCode());
     }
 
+    private static void login_DEBUG() {
+        String emaildbg = "test@example.com";
+        JPasswordField passdbg = new JPasswordField("passw0rd");
+        String passkey = Password.toKey(emaildbg, passdbg.getPassword());
+        if (Runner.validateLogin(new User(emaildbg, Password.hashPassword(passkey)))) {
+            Runner.changeFrame(new Template());
+        } else {
+            System.err.println("login failed");
+        }
+    }
+
     private static void startGUI() {
+        if (DEBUG) {
+            login_DEBUG();
+            return;
+        }
         Runner.changeFrame(new Mentality());
     }
     public static void main(String[] args) {
         Thread runner = new Runner();
         runner.start();
+        try {
+            Runner.connecting.acquire();
+        } catch (InterruptedException ex) {
+            System.err.println("connection terminated");
+            System.exit(1);
+        }
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override

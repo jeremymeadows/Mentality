@@ -2,7 +2,6 @@ package Mentality.frames;
 
 import Mentality.Runner;
 import static Mentality.utils.CustomUtilities.*;
-
 import javax.swing.*;
 import java.awt.event.*;
 

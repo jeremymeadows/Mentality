@@ -2,7 +2,6 @@ package Mentality.components;
 
 import Mentality.Runner;
 import static Mentality.utils.CustomUtilities.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

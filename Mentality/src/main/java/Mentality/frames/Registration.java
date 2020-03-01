@@ -4,7 +4,6 @@ import Mentality.Runner;
 import Mentality.components.Password;
 import Mentality.components.User;
 import static Mentality.utils.CustomUtilities.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

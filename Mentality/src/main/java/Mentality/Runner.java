@@ -3,13 +3,14 @@ package Mentality;
 import Mentality.components.Database;
 import Mentality.components.MenuBar;
 import Mentality.components.User;
-
 import javax.swing.*;
 import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.concurrent.Semaphore;
 
 public class Runner extends Thread implements Runnable {
+    public static Semaphore connecting = new Semaphore(0);
     private static JFrame frame;
     private static Database db;
     private static User user;
@@ -77,6 +78,7 @@ public class Runner extends Thread implements Runnable {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         try {
             initDB();
+            connecting.release();
         } catch (SQLException ex) {
             System.err.println("cannot establish connection to database");
             System.exit(1);

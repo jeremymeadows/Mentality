@@ -2,7 +2,6 @@ package Mentality.components;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
-
 import java.util.Arrays;
 import java.util.Random;
 

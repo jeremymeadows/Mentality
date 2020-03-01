@@ -1,9 +1,18 @@
 package Mentality.utils;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class CustomUtilities {
+    public static class ColorPalette {
+        public static Color mainColor = new Color(0xDBB6E3);
+        // 0xB4F0E0
+        // 0x9BB0FA
+        // 0xFAC7BB
+        // 0xF0DEB4
+    }
+
     public static JComponent center(JComponent component) {
         component.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         return component;
