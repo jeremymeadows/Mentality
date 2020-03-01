@@ -1,54 +1,76 @@
 package Mentality;
 
+import Mentality.components.Password;
+import Mentality.components.User;
+import Mentality.frames.Dashboard;
+import Mentality.frames.Registration;
+
+import static Mentality.utils.CustomUtilities.*;
+import static Mentality.utils.SpringUtilities.*;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.awt.event.*;
 
-public class Mentality extends JPanel implements ActionListener {
-    private static JFrame frame;
+public class Mentality extends JPanel implements ActionListener, FocusListener, KeyListener {
+    private JTextField email;
+    private JPasswordField pass;
 
     public Mentality() {
         super();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
         JLabel logo = new JLabel(new ImageIcon("src/main/resources/logo.png", "Mentality Logo"));
-        JTextArea uname = new JTextArea("username"), pass = new JTextArea("password");
-        JButton login = new JButton("Login"), register = new JButton("Register");
-        uname.setMaximumSize(new Dimension(200, 30));
-        pass.setMaximumSize(new Dimension(200, 30));
-        add(center(logo));
+        JPanel erow = new JPanel(new SpringLayout()), prow = new JPanel(new SpringLayout());
+        JLabel elabel = new JLabel("email: "), plabel = new JLabel("password: ");
 
-        add(uname);
-        add(pass);
+        email = new JTextField("email");
+        email.addFocusListener(this);
+        email.addKeyListener(this);
+        email.setMaximumSize(new Dimension(200, 30));
+        elabel.setHorizontalAlignment(JLabel.RIGHT);
+        erow.add(elabel);
+        erow.add(email);
+        pass = new JPasswordField("password");
+        pass.addFocusListener(this);
+        pass.addKeyListener(this);
+        pass.setMaximumSize(new Dimension(200, 30));
+        plabel.setHorizontalAlignment(JLabel.RIGHT);
+        prow.add(plabel);
+        prow.add(pass);
+
+        makeGrid(erow, 1, 2, 0,0,0,0);
+        makeGrid(prow, 1, 2, 0,0,0,0);
+
+        JButton login = initJButton("Login", this);
+        JButton register = initJButton("Register", this);
+
+        add(center(logo));
+        add(erow);
+        add(prow);
         add(center(login));
+        add(center(register));
     }
 
-    private JComponent center(JComponent c) {
-        c.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        return c;
+    private void login() {
+        String passkey = Password.toKey(email.getText(), pass.getPassword());
+        pass.setText("");
+        if (Runner.validateLogin(new User(email.getText(), Password.hashPassword(passkey)))) {
+            Runner.changeFrame(new Dashboard());
+        } else {
+            System.err.println("login failed");
+        }
+        System.out.println("email: " + email.getText());
+        System.out.println("password: " + Password.hashPassword(passkey));
+        System.out.println("id: " + Password.hashPassword(passkey).hashCode());
     }
 
     private static void startGUI() {
-        frame = new JFrame("Mentality");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        Mentality mainWindow = new Mentality();
-        mainWindow.setOpaque(true);
-        frame.setContentPane(mainWindow);
-
-        frame.pack();
-        frame.setSize(new Dimension(1280, 720));
-        frame.setLocation(new Point(
-                Toolkit.getDefaultToolkit().getScreenSize().width/2-640,
-                Toolkit.getDefaultToolkit().getScreenSize().height/2-360));
-        frame.setJMenuBar(MenuBar.newMenuBar());
-        frame.setVisible(true);
+        Runner.changeFrame(new Mentality());
     }
     public static void main(String[] args) {
+        Thread runner = new Runner();
+        runner.start();
+
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -59,20 +81,54 @@ public class Mentality extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("exit")) {
-            System.exit(0);
+        if (e.getActionCommand().equals("login")) {
+            login();
         }
-        if (e.getActionCommand().equals("settings")) {
-            System.err.println("open settings menu");
+        if (e.getActionCommand().equals("register")) {
+            javax.swing.SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new Registration().run();
+                }
+            });
         }
-        if (e.getActionCommand().equals("help")) {
-            try {
-                Desktop.getDesktop().browse(new URI("https://github.com/jeremymeadows/Mentality"));
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (URISyntaxException ex) {
-                ex.printStackTrace();
+    }
+
+    @Override
+    public void focusGained(FocusEvent e) {
+        if (e.getComponent().equals(email)) {
+            if (email.getText().equals("email")) {
+                email.setText("");
+            }
+        }
+        if (e.getComponent().equals(pass)) {
+            if (new String(pass.getPassword()).equals("password")) {
+                pass.setText("");
             }
         }
     }
+    @Override
+    public void focusLost(FocusEvent e) {
+        if (e.getComponent().equals(email)) {
+            if (email.getText().equals("")) {
+                email.setText("email");
+            }
+        }
+        if (e.getComponent().equals(pass)) {
+            if (pass.getPassword().length == 0) {
+                pass.setText("password");
+            }
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            login();
+        }
+    }
+    @Override
+    public void keyReleased(KeyEvent e) {}
+    @Override
+    public void keyTyped(KeyEvent e) {}
 }
