@@ -1,12 +1,15 @@
 package Mentality.frames;
 
 import Mentality.Runner;
+import Mentality.components.Search;
+
 import static Mentality.utils.CustomUtilities.*;
 import static Mentality.utils.CustomUtilities.ColorPalette.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 
 public class Template extends JPanel implements ActionListener {
     private static final int BUTTONNUM = 6;
@@ -42,11 +45,6 @@ public class Template extends JPanel implements ActionListener {
         //wall panel
         JPanel wallPanel = new JPanel();
         wallPanel.setBackground(mainColor);
-        JLabel postLabel = new JLabel ("What's on your mind");
-        postLabel.setLocation(20, 20);
-        postLabel.setSize (new Dimension (20, 20));
-        postLabel.setVisible(true);
-        wallPanel.add(postLabel);
         wallPanel.setVisible(true);
 
         //title panel
@@ -54,14 +52,23 @@ public class Template extends JPanel implements ActionListener {
         titlePanel.setBackground(mainColor);
         titlePanel.setVisible(true);
         titlePanel.setLocation(0, 0);
-        titlePanel.setSize(1600, 75);
+        titlePanel.setSize(1600, 80);
         titlePanel.add(center(new JLabel("Hello, " + Runner.getUser().getUname() + "!")));
+
+        //search panel
+        Search searchPanel = new Search();
+        searchPanel.setLocation(680, 60);
+        searchPanel.setSize(220, 15);
+
+
 
         add(redirectPanel);
         add(wallPanel);
         add(titlePanel);
+        add(searchPanel);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {}
 }
+//
