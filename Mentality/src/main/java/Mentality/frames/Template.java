@@ -2,14 +2,12 @@ package Mentality.frames;
 
 import Mentality.Runner;
 import Mentality.components.Search;
-
 import static Mentality.utils.CustomUtilities.*;
 import static Mentality.utils.CustomUtilities.ColorPalette.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 
 public class Template extends JPanel implements ActionListener {
     private static final int BUTTONNUM = 6;
@@ -60,8 +58,6 @@ public class Template extends JPanel implements ActionListener {
         searchPanel.setLocation(680, 60);
         searchPanel.setSize(220, 15);
 
-
-
         add(redirectPanel);
         add(wallPanel);
         add(titlePanel);
@@ -71,4 +67,3 @@ public class Template extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {}
 }
-//

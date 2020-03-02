@@ -1,5 +1,6 @@
 package Mentality;
 
+import Mentality.components.Calendar;
 import Mentality.components.Password;
 import Mentality.components.User;
 import Mentality.frames.Dashboard;
@@ -13,7 +14,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Mentality extends JPanel implements ActionListener, FocusListener, KeyListener {
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
     private JTextField email;
     private JPasswordField pass;
 
@@ -70,7 +71,7 @@ public class Mentality extends JPanel implements ActionListener, FocusListener, 
         JPasswordField passdbg = new JPasswordField("passw0rd");
         String passkey = Password.toKey(emaildbg, passdbg.getPassword());
         if (getRunnerInstance().validateLogin(new User(emaildbg, Password.hashPassword(passkey)))) {
-            getRunnerInstance().changeFrame(new Template());
+            getRunnerInstance().changeFrame(new Calendar());
         } else {
             System.err.println("login failed");
         }

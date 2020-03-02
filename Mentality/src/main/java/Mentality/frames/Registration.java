@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class Registration extends JPanel implements Runnable, ActionListener, FocusListener, KeyListener {
     private static JFrame popup;
 
-    private JTextField email, uname, name;
+    private JTextField email, uname, nameF, nameL;
     private JPasswordField pass, confpass;
 
     public Registration() {
@@ -27,10 +27,14 @@ public class Registration extends JPanel implements Runnable, ActionListener, Fo
         uname.addFocusListener(this);
         uname.addKeyListener(this);
         uname.setMaximumSize(new Dimension(200, 30));
-        name = new JTextField("full name");
-        name.addFocusListener(this);
-        name.addKeyListener(this);
-        name.setMaximumSize(new Dimension(200, 30));
+        nameF = new JTextField("first name");
+        nameF.addFocusListener(this);
+        nameF.addKeyListener(this);
+        nameF.setMaximumSize(new Dimension(200, 30));
+        nameL = new JTextField("last name");
+        nameL.addFocusListener(this);
+        nameL.addKeyListener(this);
+        nameL.setMaximumSize(new Dimension(200, 30));
 
         pass = new JPasswordField("password");
         pass.addFocusListener(this);
@@ -46,7 +50,8 @@ public class Registration extends JPanel implements Runnable, ActionListener, Fo
 
         add(email);
         add(uname);
-        add(name);
+        add(nameF);
+        add(nameL);
         add(pass);
         add(confpass);
         add(center(submit));
@@ -60,7 +65,11 @@ public class Registration extends JPanel implements Runnable, ActionListener, Fo
             System.err.println("invalid email");
             success = false;
         }
-        if (!name.getText().matches("^[A-Z][a-z]+ [A-Z][a-z]+$")) {
+        if (!nameF.getText().matches("^[A-Z]?[a-z]+$")) {
+            System.err.println("please enter first and last name");
+            success = false;
+        }
+        if (!nameL.getText().matches("^[A-Z]?[a-z]+$")) {
             System.err.println("please enter first and last name");
             success = false;
         }
@@ -70,7 +79,7 @@ public class Registration extends JPanel implements Runnable, ActionListener, Fo
         }
 
         if (success && getRunnerInstance().validateRegistration(new User
-                (email.getText(), Password.hashPassword(passkey), name.getText(), uname.getText()))) {
+                (email.getText(), Password.hashPassword(passkey), nameF.getText() + nameL.getText(), uname.getText()))) {
             getRunnerInstance().changeFrame(new Dashboard());
             popup.dispose();
         } else {
@@ -123,9 +132,14 @@ public class Registration extends JPanel implements Runnable, ActionListener, Fo
                 uname.setText("");
             }
         }
-        if (e.getComponent().equals(name)) {
-            if (name.getText().equals("full name")) {
-                name.setText("");
+        if (e.getComponent().equals(nameF)) {
+            if (nameF.getText().equals("first name")) {
+                nameF.setText("");
+            }
+        }
+        if (e.getComponent().equals(nameL)) {
+            if (nameL.getText().equals("last name")) {
+                nameL.setText("");
             }
         }
         if (e.getComponent().equals(pass)) {
@@ -151,9 +165,14 @@ public class Registration extends JPanel implements Runnable, ActionListener, Fo
                 uname.setText("username");
             }
         }
-        if (e.getComponent().equals(name)) {
-            if (name.getText().equals("")) {
-                name.setText("full name");
+        if (e.getComponent().equals(nameF)) {
+            if (nameF.getText().equals("")) {
+                nameF.setText("first name");
+            }
+        }
+        if (e.getComponent().equals(nameL)) {
+            if (nameL.getText().equals("")) {
+                nameL.setText("last name");
             }
         }
         if (e.getComponent().equals(pass)) {

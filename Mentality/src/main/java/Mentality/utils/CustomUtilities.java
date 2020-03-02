@@ -13,11 +13,18 @@ public class CustomUtilities {
         // 0xF0DEB4
     }
 
+    // dynamically gets path to resource
+    public static String getResource(String name) {
+        return "src/main/resources/" + name;
+    }
+
+    // shortcut to center a component
     public static JComponent center(JComponent component) {
         component.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         return component;
     }
 
+    // shortcut to create a button and assign it several common fields
     public static JButton initJButton(String label, ActionListener actionListener, String actionCommand) {
         JButton b = new JButton(label);
         b.addActionListener(actionListener);
@@ -28,6 +35,7 @@ public class CustomUtilities {
         return initJButton(label, actionListener, label.toLowerCase());
     }
 
+    // shortcut to create a menu item and assign it several common fields
     public static JMenuItem initJMenuItem(String label, ActionListener actionListener, String actionCommand, int keyEvent, KeyStroke keyStroke) {
         JMenuItem i = new JMenuItem(label, keyEvent);
         i.addActionListener(actionListener);
