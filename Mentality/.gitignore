@@ -7,3 +7,4 @@
 # excludes extra files that building the project generates
 /src/test/
 /target/
+/out/

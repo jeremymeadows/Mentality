@@ -5,6 +5,7 @@ import Mentality.components.User;
 import Mentality.frames.Dashboard;
 import Mentality.frames.Registration;
 import Mentality.frames.Template;
+import static Mentality.Runner.*;
 import static Mentality.utils.CustomUtilities.*;
 import static Mentality.utils.SpringUtilities.*;
 import javax.swing.*;
@@ -12,14 +13,14 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Mentality extends JPanel implements ActionListener, FocusListener, KeyListener {
+    private static final boolean DEBUG = false;
     private JTextField email;
     private JPasswordField pass;
-    private static final boolean DEBUG = true;
 
     public Mentality() {
         super();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        JLabel logo = new JLabel(new ImageIcon("src/main/resources/logo.png", "Mentality Logo"));
+        JLabel logo = new JLabel(new ImageIcon(getResource("logo.png"), "Mentality Logo"));
         JPanel erow = new JPanel(new SpringLayout()), prow = new JPanel(new SpringLayout());
         JLabel elabel = new JLabel("email: "), plabel = new JLabel("password: ");
 
@@ -54,8 +55,8 @@ public class Mentality extends JPanel implements ActionListener, FocusListener, 
     private void login() {
         String passkey = Password.toKey(email.getText(), pass.getPassword());
         pass.setText("");
-        if (Runner.validateLogin(new User(email.getText(), Password.hashPassword(passkey)))) {
-            Runner.changeFrame(new Dashboard());
+        if (getRunnerInstance().validateLogin(new User(email.getText(), Password.hashPassword(passkey)))) {
+            getRunnerInstance().changeFrame(new Dashboard());
         } else {
             System.err.println("login failed");
         }
@@ -68,8 +69,8 @@ public class Mentality extends JPanel implements ActionListener, FocusListener, 
         String emaildbg = "test@example.com";
         JPasswordField passdbg = new JPasswordField("passw0rd");
         String passkey = Password.toKey(emaildbg, passdbg.getPassword());
-        if (Runner.validateLogin(new User(emaildbg, Password.hashPassword(passkey)))) {
-            Runner.changeFrame(new Template());
+        if (getRunnerInstance().validateLogin(new User(emaildbg, Password.hashPassword(passkey)))) {
+            getRunnerInstance().changeFrame(new Template());
         } else {
             System.err.println("login failed");
         }
@@ -80,13 +81,13 @@ public class Mentality extends JPanel implements ActionListener, FocusListener, 
             login_DEBUG();
             return;
         }
-        Runner.changeFrame(new Mentality());
+        getRunnerInstance().changeFrame(new Mentality());
     }
     public static void main(String[] args) {
-        Thread runner = new Runner();
+        Thread runner = Runner.getRunnerInstance();
         runner.start();
         try {
-            Runner.connecting.acquire();
+            getRunnerInstance().connecting.acquire();
         } catch (InterruptedException ex) {
             System.err.println("connection terminated");
             System.exit(1);

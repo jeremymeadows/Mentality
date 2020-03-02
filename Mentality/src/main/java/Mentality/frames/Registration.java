@@ -1,8 +1,8 @@
 package Mentality.frames;
 
-import Mentality.Runner;
 import Mentality.components.Password;
 import Mentality.components.User;
+import static Mentality.Runner.*;
 import static Mentality.utils.CustomUtilities.*;
 import javax.swing.*;
 import java.awt.*;
@@ -69,9 +69,9 @@ public class Registration extends JPanel implements Runnable, ActionListener, Fo
             success = false;
         }
 
-        if (success && Runner.validateRegistration(new User
+        if (success && getRunnerInstance().validateRegistration(new User
                 (email.getText(), Password.hashPassword(passkey), name.getText(), uname.getText()))) {
-            Runner.changeFrame(new Dashboard());
+            getRunnerInstance().changeFrame(new Dashboard());
             popup.dispose();
         } else {
             pass.setText("");

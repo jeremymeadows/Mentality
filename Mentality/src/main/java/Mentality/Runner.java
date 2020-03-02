@@ -9,41 +9,53 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.Semaphore;
 
+// Runner is a singleton class which is ran as a separate thread to manage the
+// database connection, the current frame being displayed, and the user's info
 public class Runner extends Thread implements Runnable {
-    public static Semaphore connecting = new Semaphore(0);
-    private static JFrame frame;
-    private static Database db;
-    private static User user;
+    private static Runner instance;
+    public Semaphore connecting = new Semaphore(0);
+    private JFrame frame;
+    private Database db;
+    private User user;
 
-    public static User getUser() { return user; }
+    private Runner() {}
+    public static synchronized Runner getRunnerInstance() {
+        if (instance == null) {
+            instance = new Runner();
+        }
+        return instance;
+    }
+
+    public static User getUser() { return getRunnerInstance().user; }
+    public static JFrame getFrame() { return getRunnerInstance().frame; }
 
     private void initDB() throws SQLException {
         db = new Database();
     }
 
-    public static void changeFrame(JPanel f) {
+    public void changeFrame(JPanel f) {
         f.setOpaque(true);
-        frame.setContentPane(f);
+        getFrame().setContentPane(f);
 
-        frame.pack();
-        frame.setSize(new Dimension(1280, 720));
-        frame.setLocation(new Point(
+        getFrame().pack();
+        getFrame().setSize(new Dimension(1280, 720));
+        getFrame().setLocation(new Point(
                 Toolkit.getDefaultToolkit().getScreenSize().width/2-640,
                 Toolkit.getDefaultToolkit().getScreenSize().height/2-360));
-        frame.setJMenuBar(MenuBar.newMenuBar());
-        frame.setVisible(true);
+        getFrame().setJMenuBar(MenuBar.newMenuBar());
+        getFrame().setVisible(true);
     }
 
-    public static boolean validateLogin(User u) {
+    public boolean validateLogin(User u) {
         String q = "SELECT * FROM users WHERE id = '" + u.getId() + "';";
         try {
-            ResultSet r = db.query(q);
+            ResultSet r = getRunnerInstance().db.query(q);
             if (r.next()) {
                 if (r.getString("email").equals(u.getEmail()) && r.getString("password").equals(u.getPass())) {
                     u.setName(r.getString("name"));
                     u.setUname(r.getString("username"));
                     u.setId(r.getInt("id"));
-                    user = u;
+                    getRunnerInstance().user = u;
                     return true;
                 }
             }
@@ -52,10 +64,10 @@ public class Runner extends Thread implements Runnable {
         }
         return false;
     }
-    public static boolean validateRegistration(User u) {
+    public boolean validateRegistration(User u) {
         String q = "SELECT * FROM users WHERE email = '" + u.getEmail() + "';";
         try {
-            ResultSet r = db.query(q);
+            ResultSet r = getRunnerInstance().db.query(q);
             while (r.next()) {
                 if (r.getString("email").equals(u.getEmail())) {
                     System.err.println("account already registered");
@@ -63,8 +75,8 @@ public class Runner extends Thread implements Runnable {
                 }
             }
             q = u.getEmail() + "','" + u.getPass() + "'," + Integer.toUnsignedLong(u.getId()) + ",'" + u.getName() + "','" + u.getUname();
-            db.update("INSERT INTO users (email, password, id, name, username) VALUES ('" + q + "');");
-            user = u;
+            getRunnerInstance().db.update("INSERT INTO users (email, password, id, name, username) VALUES ('" + q + "');");
+            getRunnerInstance().user = u;
         } catch (SQLException ex) {
             System.err.println("bad connection");
             return false;
@@ -77,8 +89,12 @@ public class Runner extends Thread implements Runnable {
         frame = new JFrame("Mentality");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         try {
+            if (db != null) {
+                cleanup();
+            }
             initDB();
             connecting.release();
+            System.err.println("connected to database");
         } catch (SQLException ex) {
             System.err.println("cannot establish connection to database");
             System.exit(1);
@@ -86,13 +102,13 @@ public class Runner extends Thread implements Runnable {
     }
 
     public static void logout() {
-        user = null;
-        changeFrame(new Mentality());
+        getRunnerInstance().user = null;
+        getRunnerInstance().changeFrame(new Mentality());
     }
 
     public static void cleanup() {
         try {
-            db.close();
+            getRunnerInstance().db.close();
         } catch (SQLException ex) {
             System.err.println("failed to close JDBC connection");
             System.exit(1);
