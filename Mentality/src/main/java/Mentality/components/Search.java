@@ -22,6 +22,8 @@ public class Search extends JPanel implements ActionListener {
         searchButton.setSize( new Dimension(20,20));
         searchButton.setLocation(200, 65);
         searchButton.setVisible(true);
+        searchable.setVisible(true);
+
 
         this.add(searchable);
         this.add(searchButton);
