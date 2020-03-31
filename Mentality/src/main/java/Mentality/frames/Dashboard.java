@@ -41,7 +41,7 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
         for (int i = 0; i < BUTTONNUM; ++i) {
             buttons[i] = initJButton(buttonLabels[i], this, buttonCommands[i]);
             buttons[i].setSize(buttonSize);
-            buttons[i].setBackground(Color.red);
+            buttons[i].setBackground(Color.white);
             buttons[i].setLocation(buttonLocs[i]);
             redirectPanel.add(buttons[i]);
         }
