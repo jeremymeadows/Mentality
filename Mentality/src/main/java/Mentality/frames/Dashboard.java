@@ -1,6 +1,8 @@
 package Mentality.frames;
 
 import Mentality.Runner;
+import Mentality.components.Feed;
+import Mentality.components.PostToWall;
 import Mentality.components.Search;
 import Mentality.utils.CronScheduler;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +34,7 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
 
         JButton[] buttons = new JButton[BUTTONNUM];
         Dimension buttonSize = new Dimension(200,40);
-        String[] buttonLabels = { "Mood Survey", "Button #2", "Button #3", "Button #4", "Weekly Report", "Happiness Graph" };
+        String[] buttonLabels = { "Mood Survey", "Behavioral Suggestion", "Friends", "Diary", "Weekly Report", "Happiness Graph" };
         String[] buttonCommands = { "survey", "", "", "", "report", "graph" };
         Point[] buttonLocs = {
                 new Point(0, 30), new Point(0, 100), new Point(0, 170),
@@ -46,12 +48,28 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
             redirectPanel.add(buttons[i]);
         }
 
-        //wall panel
-        JPanel wallPanel = new JPanel();
-        wallPanel.setBackground(Color.white);
-        wallPanel.setVisible(true);
-        wallPanel.setLocation(200, 80);
-        wallPanel.setSize(1400, 1520);
+        //post panel
+        JPanel postPanel = new JPanel();
+        postPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        postPanel.setBackground(Color.white);
+        postPanel.setVisible(true);
+        postPanel.setLocation(200, 80);
+        postPanel.setSize(1400, 160); //1520
+
+        //feed Panel
+        JPanel feedPanel = new JPanel();
+        feedPanel.setBackground(Color.white);
+        feedPanel.setVisible(true);
+        Feed feedPaneltemp = new Feed();
+        feedPanel.add(feedPaneltemp);
+        feedPanel.setLocation(200, 240);
+        feedPanel.setSize(1400, 400);
+
+        //within wall panel a user can post to wall
+        PostToWall posttoWallPanel = new PostToWall(feedPaneltemp);
+        posttoWallPanel.setBackground(new Color(180, 180, 200));
+        posttoWallPanel.setVisible(true);
+        postPanel.add(posttoWallPanel);
 
         //title panel
         JPanel titlePanel = new JPanel();
@@ -64,12 +82,14 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
         //search panel
         Search searchPanel = new Search();
         searchPanel.setLocation(680, 60);
-        searchPanel.setSize(220, 15);
+        searchPanel.setSize(500, 15);
+
 
         add(redirectPanel);
-        add(wallPanel);
+        add(postPanel);
         add(titlePanel);
         add(searchPanel);
+        add(feedPanel);
     }
 
     @Override
@@ -81,8 +101,8 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
             System.out.println ("Opening Report");
 
             JDialog reportDialogue = new Report(Runner.getFrame(),"Report");
-            reportDialogue.setSize(new Dimension(1250, 780));
-            reportDialogue.setResizable(false);
+            reportDialogue.setSize(new Dimension(600, 600));
+            reportDialogue.setLocation (new Point (300, 230));
             reportDialogue.getContentPane().setBackground(mainColor);
         }
         if (e.getActionCommand().equals("graph")) {
@@ -92,7 +112,8 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
             String date = d.toString();
             JDialog graphDialogue = new HappinessGraph(Runner.getFrame(),"Happiness Graph", date);
 
-            graphDialogue.setSize(new Dimension(1250, 780));
+            graphDialogue.setSize(new Dimension(1000, 600));
+            graphDialogue.setLocation (new Point (300, 230));
             graphDialogue.setResizable(false);
         }
         if (e.getActionCommand().equals("")) {
