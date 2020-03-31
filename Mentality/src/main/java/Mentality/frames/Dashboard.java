@@ -102,7 +102,7 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
         }
         if (e.getActionCommand().equals("diary")) {
             System.out.println ("Redirecting to Diary");
-            JDialog DiaryFrame = new DiaryFrame(Runner.getFrame(),"Survey");
+            JDialog DiaryFrame = new DiaryFrame(Runner.getFrame(),"Diary");
             DiaryFrame.setSize(new Dimension(600, 600));
             DiaryFrame.setLocation (new Point (300, 230));
             DiaryFrame.getContentPane().setBackground(mainColor);
