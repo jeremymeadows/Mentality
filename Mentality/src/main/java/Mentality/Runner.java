@@ -47,7 +47,7 @@ public class Runner extends Thread implements Runnable {
     }
 
     public boolean validateLogin(User u) {
-        String q = "SELECT * FROM Users WHERE id = '" + u.getId() + "';";
+        String q = "SELECT * FROM users WHERE id = '" + u.getId() + "';";
         try {
             ResultSet r = getRunnerInstance().db.query(q);
             if (r.next()) {
@@ -66,7 +66,7 @@ public class Runner extends Thread implements Runnable {
         return false;
     }
     public boolean validateRegistration(User u) {
-        String q = "SELECT * FROM Users WHERE email = '" + u.getEmail() + "';";
+        String q = "SELECT * FROM users WHERE email = '" + u.getEmail() + "';";
         try {
             ResultSet r = getRunnerInstance().db.query(q);
             while (r.next()) {
@@ -76,7 +76,7 @@ public class Runner extends Thread implements Runnable {
                 }
             }
             q = u.getEmail() + "','" + u.getPass() + "'," + Integer.toUnsignedLong(u.getId()) + ",'" + u.getNameFirst() + "','" + u.getNameLast() +  "','" + u.getUname();
-            getRunnerInstance().db.update("INSERT INTO Users (email, password, id, namefirst, namelast, username) VALUES ('" + q + "');");
+            getRunnerInstance().db.update("INSERT INTO users (email, password, id, namefirst, namelast, username) VALUES ('" + q + "');");
             getRunnerInstance().user = u;
         } catch (SQLException ex) {
             System.err.println("bad connection");
