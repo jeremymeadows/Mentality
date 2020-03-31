@@ -33,7 +33,7 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
         JButton[] buttons = new JButton[BUTTONNUM];
         Dimension buttonSize = new Dimension(200,40);
         String[] buttonLabels = { "Mood Survey", "Behavioral Suggestion", "Friends", "Diary", "Weekly Report", "Happiness Graph" };
-        String[] buttonCommands = { "survey", "", "", "diary", "report", "graph" };
+        String[] buttonCommands = { "survey", "behavior", "friends", "diary", "report", "graph" };
         Point[] buttonLocs = {
                 new Point(0, 30), new Point(0, 100), new Point(0, 170),
                 new Point(0, 240), new Point(0, 310), new Point(0, 380)
@@ -75,7 +75,7 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
         titlePanel.setVisible(true);
         titlePanel.setLocation(0, 0);
         titlePanel.setSize(1600, 80);
-        titlePanel.add(center(new JLabel("Hello, User" + "!")));
+        titlePanel.add(center(new JLabel("Hello, " + Runner.getUser().getUname() + "!")));
 
         //search panel
         Search searchPanel = new Search();
@@ -98,7 +98,12 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
             MainFrame.setSize(new Dimension(600, 600));
             MainFrame.setLocation (new Point (300, 230));
             MainFrame.getContentPane().setBackground(mainColor);
-
+        }
+        if (e.getActionCommand().equals("behavior")) {
+            System.out.println ("Redirecting to Behavioral Suggestions");
+        }
+        if (e.getActionCommand().equals("friends")) {
+            System.out.println ("Redirecting to Friends");
         }
         if (e.getActionCommand().equals("diary")) {
             System.out.println ("Redirecting to Diary");
@@ -106,7 +111,6 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
             DiaryFrame.setSize(new Dimension(600, 600));
             DiaryFrame.setLocation (new Point (300, 230));
             DiaryFrame.getContentPane().setBackground(mainColor);
-
         }
         if (e.getActionCommand().equals("report")) {
             System.out.println ("Opening Report");
@@ -126,9 +130,6 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
             graphDialogue.setSize(new Dimension(1000, 600));
             graphDialogue.setLocation (new Point (300, 230));
             graphDialogue.setResizable(false);
-        }
-        if (e.getActionCommand().equals("")) {
-            System.out.println("button clicked");
         }
     }
 
