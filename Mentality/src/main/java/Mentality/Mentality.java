@@ -5,7 +5,7 @@ import Mentality.components.Password;
 import Mentality.components.User;
 import Mentality.frames.Dashboard;
 import Mentality.frames.Registration;
-import Mentality.frames.Template;
+
 import static Mentality.Runner.*;
 import static Mentality.utils.CustomUtilities.*;
 import static Mentality.utils.SpringUtilities.*;
@@ -14,7 +14,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Mentality extends JPanel implements ActionListener, FocusListener, KeyListener {
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
     private JTextField email;
     private JPasswordField pass;
 
@@ -71,7 +71,7 @@ public class Mentality extends JPanel implements ActionListener, FocusListener, 
         JPasswordField passdbg = new JPasswordField("passw0rd");
         String passkey = Password.toKey(emaildbg, passdbg.getPassword());
         if (getRunnerInstance().validateLogin(new User(emaildbg, Password.hashPassword(passkey)))) {
-            getRunnerInstance().changeFrame(new Calendar());
+            getRunnerInstance().changeFrame(new Dashboard());
         } else {
             System.err.println("login failed");
         }
@@ -155,3 +155,92 @@ public class Mentality extends JPanel implements ActionListener, FocusListener, 
     @Override
     public void keyTyped(KeyEvent e) {}
 }
+//****
+//package Mentality;
+//
+//import Mentality.frames.Template;
+//import org.springframework.context.support.ClassPathXmlApplicationContext;
+//
+//import javax.swing.*;
+//import java.awt.*;
+//import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
+//import java.io.IOException;
+//import java.net.URI;
+//import java.net.URISyntaxException;
+//
+//public class Mentality extends JPanel implements ActionListener, FocusListener, KeyListener {
+//    private static final boolean DEBUG = false;
+//    private JTextField email;
+//    private JPasswordField pass;
+//
+//    public Mentality() {
+//        super();
+//        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+//
+//        JLabel logo = new JLabel(new ImageIcon("src/main/resources/logo.png", "Mentality Logo"));
+//        JTextArea uname = new JTextArea("username"), pass = new JTextArea("password");
+//        JButton login = new JButton("Login"), register = new JButton("Register");
+//        uname.setMaximumSize(new Dimension(200, 30));
+//        pass.setMaximumSize(new Dimension(200, 30));
+//        add(center(logo));
+//
+//        add(uname);
+//        add(pass);
+//        add(center(login));
+//    }
+//
+//    private JComponent center(JComponent c) {
+//        c.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+//        return c;
+//    }
+//
+//    private static void startGUI() {
+//        frame = new JFrame("Mentality");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+////
+////        Mentality mainWindow = new Mentality();
+//        Template mainWindow = new Template(frame);
+//        mainWindow.setOpaque(true);
+//        frame.setContentPane(mainWindow);
+//
+//        frame.pack();
+//        frame.setSize(new Dimension(1280, 720));
+//        frame.setLocation(new Point(
+//                Toolkit.getDefaultToolkit().getScreenSize().width/2-640,
+//                Toolkit.getDefaultToolkit().getScreenSize().height/2-360));
+////        frame.setJMenuBar(MenuBar.newMenuBar());
+//        frame.setVisible(true);
+//
+//
+//
+//    }
+//    public static void main(String[] args) {
+//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+////                ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("application context");
+//                startGUI();
+//            }
+//        });
+//    }
+//
+//    @Override
+//    public void actionPerformed(ActionEvent e) {
+//        if (e.getActionCommand().equals("exit")) {
+//            System.exit(0);
+//        }
+//        if (e.getActionCommand().equals("settings")) {
+//            System.err.println("open settings menu");
+//        }
+//        if (e.getActionCommand().equals("help")) {
+//            try {
+//                Desktop.getDesktop().browse(new URI("https://github.com/jeremymeadows/Mentality"));
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            } catch (URISyntaxException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+//    }
+//}
