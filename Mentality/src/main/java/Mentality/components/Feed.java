@@ -36,7 +36,7 @@ public class Feed extends JPanel{
         add(panel3);
     }
 
-    public void addPost(Post post){
+    public void updateFeed(Post post){
 
         panel1.remove(post1);
         panel2.remove(post2);

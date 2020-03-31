@@ -5,8 +5,6 @@ import Mentality.components.Feed;
 import Mentality.components.PostToWall;
 import Mentality.components.Search;
 import Mentality.utils.CronScheduler;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import static Mentality.utils.CustomUtilities.*;
 import static Mentality.utils.CustomUtilities.ColorPalette.mainColor;
@@ -35,7 +33,7 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
         JButton[] buttons = new JButton[BUTTONNUM];
         Dimension buttonSize = new Dimension(200,40);
         String[] buttonLabels = { "Mood Survey", "Behavioral Suggestion", "Friends", "Diary", "Weekly Report", "Happiness Graph" };
-        String[] buttonCommands = { "survey", "", "", "", "report", "graph" };
+        String[] buttonCommands = { "survey", "", "", "diary", "report", "graph" };
         Point[] buttonLocs = {
                 new Point(0, 30), new Point(0, 100), new Point(0, 170),
                 new Point(0, 240), new Point(0, 310), new Point(0, 380)
@@ -96,6 +94,19 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("survey")) {
             System.out.println ("Redirecting to Mood Survey");
+            JDialog MainFrame = new Mood(Runner.getFrame(),"Survey");
+            MainFrame.setSize(new Dimension(600, 600));
+            MainFrame.setLocation (new Point (300, 230));
+            MainFrame.getContentPane().setBackground(mainColor);
+
+        }
+        if (e.getActionCommand().equals("diary")) {
+            System.out.println ("Redirecting to Diary");
+            JDialog DiaryFrame = new DiaryFrame(Runner.getFrame(),"Survey");
+            DiaryFrame.setSize(new Dimension(600, 600));
+            DiaryFrame.setLocation (new Point (300, 230));
+            DiaryFrame.getContentPane().setBackground(mainColor);
+
         }
         if (e.getActionCommand().equals("report")) {
             System.out.println ("Opening Report");

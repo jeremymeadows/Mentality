@@ -1,7 +1,6 @@
 package Mentality.components;
 
 import javax.swing.*;
-import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +16,6 @@ public class PostToWall extends JPanel {
     public PostToWall(Feed feed) {
         setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
-
 
         final JLabel moodLabel = new JLabel("How do you feel?");
         final JTextArea area = new JTextArea("What's on Your Mind?", 4, 60);
@@ -73,7 +71,7 @@ public class PostToWall extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Posted to Wall");
                 Post postPanel = new Post("user_name", new Date(), postMessage, mood);
-                feed.addPost(postPanel);
+                feed.updateFeed(postPanel);
 
 
             }
