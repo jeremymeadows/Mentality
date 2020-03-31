@@ -11,10 +11,29 @@ import static Mentality.utils.CustomUtilities.ColorPalette.mainColor;
 import static Mentality.utils.CustomUtilities.center;
 
 public class Report extends JDialog {
+    //default dummy values
+    Double avgHappiness = 8.2;
+    String bestActivity = "Software Engineering";
+    String worstActivity = "Isolation";
+    String bestPerson = "Cerny";
+    String worstPerson = "Perez Hilton";
+    String bestDay = "Monday";
+    String worstDay = "Tuesday";
+
     private static final long serialVersionUID = 2L;
+    JPanel topPanel;
 
     public Report(JFrame parent, String title) {
         super(parent, title);
+
+        //panel to hold all panels
+        setLayout(new GridBagLayout());
+        GridBagConstraints gc = new GridBagConstraints();
+
+        //create top panel
+        topPanel = new JPanel();
+        topPanel.setLayout(new FlowLayout());
+        parent.setBackground(new Color(180, 180, 200));
 
         System.out.println("creating the report window..");
 
@@ -22,64 +41,93 @@ public class Report extends JDialog {
         Point p = new Point(200, 120);
         setLocation(p.x, p.y);
 
-        //set the color of the window
-        setBackground(mainColor);
-
-
         // Create close me button
-        JPanel buttonPane = new JPanel();
+        JPanel buttonPanel = new JPanel();
         JButton button = new JButton("Close me");
-        buttonPane.add(button);
+        buttonPanel.add(button);
+
+
+        addLabels();
+        addReportResults();
+        gc.gridx = 0;
+        gc.gridy = 0;
+        gc.weightx = 1;
+        gc.weighty = 1;
+        add(topPanel, gc);
         // set action listener on the button
         button.addActionListener(new Report.MyActionListener());
-        getContentPane().add(buttonPane, BorderLayout.PAGE_END);
+        gc.gridx = 0;
+        gc.gridy = 1;
+        gc.weightx = .5;
+        gc.weighty = .5;
+        add(buttonPanel, gc);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
         setVisible(true);
+    }
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(0, 1));
-        panel.setBackground(mainColor);
-        
-        // Display report
-        panel.add(center (new JLabel ("Average happiness: 8.2/10")));
-        panel.add(center (new JLabel ("Activity that puts you in the best mood: Running")));
-        panel.add(center (new JLabel ("Activity that puts you in the worst mood: Software Engineering")));
-        panel.add(center (new JLabel ("Person that puts you in the best mood: Cerny")));
-        panel.add(center (new JLabel ("Person that puts you in the worst mood: Booth")));
-        panel.add(center (new JLabel ("Best day of the week: Wednesday")));
-        panel.add(center (new JLabel ("Worst day of the week: Tuesday")));
+    public void addLabels(){
 
-        getContentPane().add(panel);
+        JPanel labelPanel = new JPanel();
+        labelPanel.setLayout(new GridLayout(0, 1));
+        labelPanel.setBackground(new Color(180, 180, 200));
 
+        // Add labels to label Panel
+        JTextField text = new JTextField ("Average happiness:");
+        text.setEditable(false);
+        labelPanel.add(text);
+        text = new JTextField ("Activity that puts you in the best mood:");
+        labelPanel.add(text);
+        text = new JTextField ("Activity that puts you in the worst mood:");
+        labelPanel.add(text);
+        text = new JTextField ("Person that puts you in the best mood:");
+        labelPanel.add(text);
+        text = new JTextField ("Person that puts you in the worst mood:");
+        labelPanel.add(text);
+        text = new JTextField ("Best day of the week:");
+        labelPanel.add(text);
+        text = new JTextField ("Worst day of the week:");
+        labelPanel.add(text);
+        topPanel.add(labelPanel);
+    }
 
+    public void addReportResults(){
 
+        JPanel resultsPanel = new JPanel();
+        resultsPanel.setLayout(new GridLayout(0, 1));
+        resultsPanel.setBackground(new Color(180, 180, 200));
 
-
-
+        // Add labels to resultsPanel
+        JTextField text = new JTextField ((String.valueOf(avgHappiness)));
+        text.setEditable(false);
+        resultsPanel.add(text);
+        text = new JTextField (bestActivity);
+        resultsPanel.add(text);
+        text = new JTextField (worstActivity);
+        resultsPanel.add(text);
+        text = new JTextField (bestPerson);
+        resultsPanel.add(text);
+        text = new JTextField (worstPerson);
+        resultsPanel.add(text);
+        text = new JTextField (bestDay);
+        resultsPanel.add(text);
+        text = new JTextField (worstDay);
+        resultsPanel.add(text);
+        topPanel.add(resultsPanel);
 
     }
 
-    // override the createRootPane inherited by the JDialog, to create the rootPane.
-    // create functionality to close the window when "Escape" button is pressed
-    public JRootPane createRootPane() {
-        JRootPane rootPane = new JRootPane();
-        KeyStroke stroke = KeyStroke.getKeyStroke("ESCAPE");
-        Action action = new AbstractAction() {
-
-            private static final long serialVersionUID = 1L;
-
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("escaping..");
-                setVisible(false);
-                dispose();
-            }
-        };
-        InputMap inputMap = rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-        inputMap.put(stroke, "ESCAPE");
-        rootPane.getActionMap().put("ESCAPE", action);
-        return rootPane;
+    public void setReportValues(Double avgHappiness, String bestActivity, String worstActivity, String bestPerson,
+            String worstPerson, String bestDay, String worstDay){
+        this.avgHappiness = avgHappiness;
+        this.bestActivity = bestActivity;
+        this.worstActivity = worstActivity;
+        this.bestPerson = bestPerson;
+        this.worstPerson = worstPerson;
+        this.bestDay = bestDay;
+        this.worstDay = worstDay;
     }
+
 
     // an action listener to be used when an action is performed
     // (e.g. button is pressed)

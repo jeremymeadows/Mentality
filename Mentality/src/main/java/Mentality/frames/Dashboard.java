@@ -1,22 +1,26 @@
 package Mentality.frames;
 
 import Mentality.Runner;
+import Mentality.components.PostToWall;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import static Mentality.utils.CustomUtilities.*;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
-public class Dashboard extends JPanel implements ActionListener, FocusListener, KeyListener {
+public class Dashboard extends JPanel {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-//                Template template = new Template();
-//                MoodSurvey template = new MoodSurvey();
+
+                frame.setSize(1600, 800);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
                 ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
                 Dashboard dashboard = new Dashboard(frame);
 
@@ -39,21 +43,10 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
         JLabel logo = new JLabel("Hello, User ");
         add(center(logo));
         add(template);
+
         template.setVisible(true);
+
+
+
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {}
-
-    @Override
-    public void focusGained(FocusEvent e) {}
-    @Override
-    public void focusLost(FocusEvent e) {}
-
-    @Override
-    public void keyPressed(KeyEvent e) {}
-    @Override
-    public void keyReleased(KeyEvent e) {}
-    @Override
-    public void keyTyped(KeyEvent e) {}
 }
