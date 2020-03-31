@@ -79,7 +79,7 @@ public class Registration extends JPanel implements Runnable, ActionListener, Fo
         }
 
         if (success && getRunnerInstance().validateRegistration(new User
-                (email.getText(), Password.hashPassword(passkey), nameF.getText() + nameL.getText(), uname.getText()))) {
+                (email.getText(), Password.hashPassword(passkey), nameF.getText(), nameL.getText(), uname.getText()))) {
             getRunnerInstance().changeFrame(new Dashboard());
             popup.dispose();
         } else {
