@@ -102,6 +102,26 @@ public class Runner extends Thread implements Runnable {
         }
     }
 
+    public static ResultSet query(String query) {
+        try {
+            return getRunnerInstance().db.query(query);
+        } catch (SQLException ex) {
+            System.err.println("query failed");
+            System.err.println(ex);
+            return null;
+        }
+    }
+
+    public static int update(String query) {
+        try {
+            return getRunnerInstance().db.update(query);
+        } catch (SQLException ex) {
+            System.err.println("update failed");
+            System.err.println(ex);
+            return -1;
+        }
+    }
+
     public static void logout() {
         getRunnerInstance().user = null;
         getRunnerInstance().changeFrame(new Mentality());

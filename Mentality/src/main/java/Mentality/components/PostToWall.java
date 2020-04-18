@@ -1,5 +1,7 @@
 package Mentality.components;
 
+import Mentality.Runner;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -70,10 +72,8 @@ public class PostToWall extends JPanel {
         postButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Posted to Wall");
-                Post postPanel = new Post("user_name", new Date(), postMessage, mood);
-                feed.updateFeed(postPanel);
-
-
+                Runner.update("INSERT INTO wall values('" + Runner.getUser().getEmail() + "', NOW(), '" + Runner.getUser().getEmail() +"', '" + postMessage + "', " + mood + ");");
+                feed.updateFeed();
             }
         });
 

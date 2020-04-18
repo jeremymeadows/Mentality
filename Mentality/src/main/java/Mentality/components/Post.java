@@ -18,7 +18,6 @@ public class Post extends JPanel{
 
     public Post(String name, Date date_posted, String post, int mood) {
         setLayout(new GridBagLayout());
-        GridBagConstraints gc = new GridBagConstraints();
 
         this.name = name;
         this.date_posted = date_posted;
@@ -33,7 +32,10 @@ public class Post extends JPanel{
         jp = new JScrollPane(postMessage);
 
         starRater = new StarRater(10, mood, mood);
+    }
 
+    void buildPost() {
+        GridBagConstraints gc = new GridBagConstraints();
 
         gc.gridx = 0;
         gc.gridy = 0;
@@ -60,4 +62,8 @@ public class Post extends JPanel{
         add(starRater, gc);
     }
 
+    void setUserame(String name) {
+        this.name = name;
+        labelName = new JLabel(name);
+    }
 }

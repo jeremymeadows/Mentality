@@ -8,8 +8,7 @@ public class Database {
 
     public Database() throws SQLException {
 //        con = DriverManager.getConnection("jdbc:postgresql://jeremymeadows.duckdns.org:5432/mentality", "mentality", "mentalityadmin");
-        con = DriverManager.getConnection("jdbc:mysql://mentality.jeremy.not-pc.com:3306/mentality", "jeremybmeadows", "passw0rd");
-
+        con = DriverManager.getConnection("jdbc:mysql://mentality.jeremy.not-pc.com:3306/mentality?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "jeremybmeadows", "passw0rd");
         st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
     }
 
