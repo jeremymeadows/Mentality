@@ -13,7 +13,10 @@ import java.util.List;
 public class Feed extends JPanel{
     JPanel[] panels = new JPanel[3];
     Post[] posts = new Post[3];
-    public Feed (){
+    User user;
+
+    public Feed (User u){
+        user = u;
         setLayout(new GridLayout(0, 1));
 
         //there will be three panels on a feed at a given time
@@ -45,7 +48,7 @@ public class Feed extends JPanel{
         repaint();
 
         try {
-            ResultSet post = Runner.query("SELECT * FROM wall WHERE email = '" + Runner.getUser().getEmail() + "' ORDER BY timestamp DESC LIMIT 3;");
+            ResultSet post = Runner.query("SELECT * FROM wall WHERE email = '" + user.getEmail() + "' ORDER BY timestamp DESC LIMIT 3;");
             int c = -1;
             while (post.next()) {
                 posts[++c] = new Post(post.getString("author"), post.getDate("timestamp"), post.getString("post"), post.getInt("mood"));

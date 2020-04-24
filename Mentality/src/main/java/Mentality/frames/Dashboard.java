@@ -58,13 +58,13 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
         JPanel feedPanel = new JPanel();
         feedPanel.setBackground(Color.white);
         feedPanel.setVisible(true);
-        Feed feedPaneltemp = new Feed();
+        Feed feedPaneltemp = new Feed(Runner.getUser());
         feedPanel.add(feedPaneltemp);
         feedPanel.setLocation(200, 240);
         feedPanel.setSize(1400, 400);
 
         //within wall panel a user can post to wall
-        PostToWall posttoWallPanel = new PostToWall(feedPaneltemp);
+        PostToWall posttoWallPanel = new PostToWall(Runner.getUser(), feedPaneltemp);
         posttoWallPanel.setBackground(new Color(180, 180, 200));
         posttoWallPanel.setVisible(true);
         postPanel.add(posttoWallPanel);

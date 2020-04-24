@@ -1,6 +1,7 @@
 package Mentality.components;
 
 import Mentality.Runner;
+import Mentality.frames.Page;
 
 import static Mentality.utils.CustomUtilities.*;
 import javax.swing.*;
@@ -9,15 +10,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static Mentality.utils.CustomUtilities.ColorPalette.*;
 
 public class Search extends JPanel implements ActionListener {
-    private JTextField searchable = new JTextField(50);
+    private JTextField searchable = new JTextField("", 50);
     private JButton searchButton = initJButton("Search Users", this);
-//    private JPanel searchPanel = new JPanel();
 
-    public Search() throws HeadlessException {
+    public Search()  {
         super();
         this.setLayout(new GridLayout(1,1));
         this.setBackground(mainColor);
@@ -29,7 +30,6 @@ public class Search extends JPanel implements ActionListener {
         searchButton.setVisible(true);
         searchable.setVisible(true);
 
-
         add(searchable);
         add(searchButton);
     }
@@ -37,16 +37,41 @@ public class Search extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String s = searchable.getText();
-        ResultSet r = Runner.query("SELECT * FROM users WHERE username LIKE '%" + s + "%'");
+        ArrayList<Object> users = new ArrayList<>();
         try {
+            ResultSet r = Runner.query("SELECT username FROM users WHERE username LIKE '%" + s + "%';");
             while (r.next()) {
-                System.out.println(r.getString("username"));
+                String un = r.getString("username");
+                users.add(un);
             }
-            return;
         } catch (SQLException ex) {
             System.err.println(ex);
         }
-        JOptionPane.showMessageDialog(null,"User Does Not Exist");
-    }
 
+        if (users.size() > 0) {
+            String un = (String)JOptionPane.showInputDialog(
+                    Runner.getFrame(),
+                    "Go to user's profile:\n",
+                    "Search Results",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    users.toArray(),
+                    users.get(0)
+            );
+            try {
+                ResultSet r = Runner.query("SELECT * FROM users WHERE username = '" + un + "';");
+                User u = new User();
+                while (r.next()) {
+                    u.setUname(un);
+                    u.setEmail(r.getString("email"));
+                    u.setId(r.getInt("id"));
+                }
+                Runner.getRunnerInstance().changeFrame(new Page(u));
+            } catch (SQLException ex) {
+                System.err.println(ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "User Does Not Exist");
+        }
+    }
 }

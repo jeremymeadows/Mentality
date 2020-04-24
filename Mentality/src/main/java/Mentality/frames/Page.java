@@ -62,13 +62,13 @@ public class Page extends JPanel implements ActionListener, FocusListener, KeyLi
         JPanel feedPanel = new JPanel();
         feedPanel.setBackground(Color.white);
         feedPanel.setVisible(true);
-        Feed feedPaneltemp = new Feed();
+        Feed feedPaneltemp = new Feed(user);
         feedPanel.add(feedPaneltemp);
         feedPanel.setLocation(200, 240);
         feedPanel.setSize(1400, 400);
 
         //within wall panel a user can post to wall
-        PostToWall posttoWallPanel = new PostToWall(feedPaneltemp);
+        PostToWall posttoWallPanel = new PostToWall(u, feedPaneltemp);
         posttoWallPanel.setBackground(new Color(180, 180, 200));
         posttoWallPanel.setVisible(true);
         postPanel.add(posttoWallPanel);

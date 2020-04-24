@@ -4,6 +4,10 @@ public class User {
     private String email, pass, nameFirst, nameLast, uname;
     private int id;
 
+    protected User() {
+        pass = null;
+        id = -1;
+    }
     public User(String email, String pass) {
         this.email = email;
         this.pass = pass;
