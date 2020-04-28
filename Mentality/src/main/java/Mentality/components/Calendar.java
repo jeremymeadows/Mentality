@@ -22,6 +22,8 @@ public class Calendar extends JPanel implements ItemListener, MouseListener {
             "July", "August", "September", "October", "November", "December" };
     int[] days ={ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
+    public String [] selected = new String[3];
+
     public Calendar() {
         super();
         p1 = new JPanel();
@@ -102,8 +104,12 @@ public class Calendar extends JPanel implements ItemListener, MouseListener {
             JLabel l = (JLabel)mouseEvent.getSource();
             System.out.println(months[month.getSelectedIndex()] + ' ' + l.getText() +
                     ", " + (yearmin + year.getSelectedIndex()));
-            l.setText("hi");
+            l.setText("*");
             l.setBackground(Color.green);
+            selected[1] = months[month.getSelectedIndex()];
+            selected[0] = l.getText();
+            selected[2] = String.valueOf(yearmin + year.getSelectedIndex());
+
             p2.repaint();
         }
     }

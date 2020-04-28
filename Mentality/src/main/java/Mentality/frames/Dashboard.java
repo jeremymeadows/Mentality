@@ -30,6 +30,13 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
         redirectPanel.setLocation(0, 75);
         redirectPanel.setSize(200, 800);
 
+        //create home button
+        JButton homeButton = new JButton("Home");
+        add(homeButton);
+        homeButton.setSize(new Dimension(200,80));
+        homeButton.setBackground(mainColor);
+        homeButton.setLocation(new Point (0, 0));
+
         JButton[] buttons = new JButton[BUTTONNUM];
         Dimension buttonSize = new Dimension(200,40);
         String[] buttonLabels = { "Mood Survey", "Behavioral Suggestion", "Friends", "Diary", "Weekly Report", "Happiness Graph" };

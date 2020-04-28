@@ -34,6 +34,15 @@ public class Page extends JPanel implements ActionListener, FocusListener, KeyLi
         redirectPanel.setLocation(0, 75);
         redirectPanel.setSize(200, 800);
 
+        //create home button
+        JButton homeButton = new JButton("Home");
+        add(homeButton);
+        homeButton.setSize(new Dimension(200,80));
+        homeButton.setBackground(mainColor);
+        homeButton.setLocation(new Point (0, 0));
+        homeButton.setActionCommand("home");
+        homeButton.addActionListener(this);
+
         JButton[] buttons = new JButton[BUTTONNUM];
         Dimension buttonSize = new Dimension(200,40);
         String[] buttonLabels = { "Mood Survey", "Behavioral Suggestion", "Friends", "Diary", "Weekly Report", "Happiness Graph" };
@@ -134,6 +143,10 @@ public class Page extends JPanel implements ActionListener, FocusListener, KeyLi
             graphDialogue.setSize(new Dimension(1000, 600));
             graphDialogue.setLocation (new Point (300, 230));
             graphDialogue.setResizable(false);
+        }
+        if (e.getActionCommand().equals("home")){
+            System.out.println ("Going back to the dashboard");
+            Runner.getRunnerInstance().changeFrame(new Page(Runner.getUser()));
         }
     }
 

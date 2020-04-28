@@ -13,7 +13,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Mentality extends JPanel implements ActionListener, FocusListener, KeyListener {
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
     private JTextField email;
     private JPasswordField pass;
 
