@@ -15,7 +15,7 @@ public class Mood extends JDialog implements ActionListener{
     private JButton peopleSurvey = new JButton("Fill out People Survey");
     private JButton sleepSurvey = new JButton("Fill out Sleep Survey");
     private JButton exerciseSurvey = new JButton("Fill out Exercise Survey");
-    private JButton weatherSurvey = new JButton("Fill out Weather Survey");
+    private JButton submitSurvey = new JButton("Submit Survey");
 
     int happiness, stress, sadness;
     JFrame parent;
@@ -85,7 +85,7 @@ public class Mood extends JDialog implements ActionListener{
         otherSurveys.add(peopleSurvey);
         otherSurveys.add(sleepSurvey);
         otherSurveys.add(exerciseSurvey);
-        otherSurveys.add(weatherSurvey);
+        otherSurveys.add(submitSurvey);
 
         add(calendarPanel);
         add(scorePanel);
@@ -97,8 +97,8 @@ public class Mood extends JDialog implements ActionListener{
         sleepSurvey.setActionCommand("sleep");
         exerciseSurvey.addActionListener(this);
         exerciseSurvey.setActionCommand("exercise");
-        weatherSurvey.addActionListener(this);
-        weatherSurvey.setActionCommand("weather");
+        submitSurvey.addActionListener(this);
+        submitSurvey.setActionCommand("submit");
 
 
         setSize(200, 300);
@@ -124,9 +124,14 @@ public class Mood extends JDialog implements ActionListener{
         }
         if (e.getActionCommand().equals("exercise")){
             System.out.println("Redirecting to the exercise survey");
+            JDialog MainFrame = new Exercise(Runner.getFrame(),"Survey");
+//            MainFrame.setSize(new Dimension(600, 600));
+            MainFrame.setLocation (new Point (300, 230));
+            MainFrame.getContentPane().setBackground(mainColor);
         }
-        if (e.getActionCommand().equals("weather")){
-            System.out.println("Redirecting to the weather survey");
+        if (e.getActionCommand().equals("submit")){
+            System.out.println("Submitting survey");
+            this.dispose();
         }
 
     }
