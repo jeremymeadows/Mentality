@@ -38,7 +38,7 @@ public class Runner extends Thread implements Runnable {
         getFrame().setContentPane(f);
 
         getFrame().pack();
-        getFrame().setSize(new Dimension(1280, 720));
+        getFrame().setSize(new Dimension(1400, 720));
         getFrame().setLocation(new Point(
                 Toolkit.getDefaultToolkit().getScreenSize().width/2-640,
                 Toolkit.getDefaultToolkit().getScreenSize().height/2-360));

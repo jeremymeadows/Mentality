@@ -65,6 +65,8 @@ public class Search extends JPanel implements ActionListener {
                     u.setUname(un);
                     u.setEmail(r.getString("email"));
                     u.setId(r.getInt("id"));
+                    u.setNameFirst(r.getString("namefirst"));
+                    u.setNameLast(r.getString("namelast"));
                 }
                 Runner.getRunnerInstance().changeFrame(new Page(u));
             } catch (SQLException ex) {

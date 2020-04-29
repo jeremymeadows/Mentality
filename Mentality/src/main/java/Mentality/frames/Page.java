@@ -5,11 +5,14 @@ import Mentality.components.Feed;
 import Mentality.components.PostToWall;
 import Mentality.components.Search;
 import Mentality.components.User;
+import Mentality.utils.BadDataStorage;
 import Mentality.utils.CronScheduler;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 import static Mentality.utils.CustomUtilities.ColorPalette.mainColor;
@@ -17,7 +20,7 @@ import static Mentality.utils.CustomUtilities.center;
 import static Mentality.utils.CustomUtilities.initJButton;
 
 public class Page extends JPanel implements ActionListener, FocusListener, KeyListener {
-    private static final int BUTTONNUM = 6;
+    private static final int BUTTONNUM = 5;
     User user;
 
     public Page(User u) {
@@ -45,10 +48,10 @@ public class Page extends JPanel implements ActionListener, FocusListener, KeyLi
 
         JButton[] buttons = new JButton[BUTTONNUM];
         Dimension buttonSize = new Dimension(200,40);
-        String[] buttonLabels = { "Mood Survey", "Behavioral Suggestion", "Friends", "Diary", "Weekly Report", "Happiness Graph" };
-        String[] buttonCommands = { "survey", "behavior", "friends", "diary", "report", "graph" };
+        String[] buttonLabels = { "Mood Survey", "Friends", "Diary", "Weekly Report", "Happiness Graph" };
+        String[] buttonCommands = { "survey", "friends", "diary", "report", "graph" };
         Point[] buttonLocs = {
-                new Point(0, 30), new Point(0, 100), new Point(0, 170),
+                new Point(0, 100), new Point(0, 170),
                 new Point(0, 240), new Point(0, 310), new Point(0, 380)
         };
         for (int i = 0; i < BUTTONNUM; ++i) {
@@ -95,6 +98,15 @@ public class Page extends JPanel implements ActionListener, FocusListener, KeyLi
         searchPanel.setLocation(680, 60);
         searchPanel.setSize(500, 15);
 
+        //add friend option
+        JButton addFriendButton = new JButton("add friend");
+        addFriendButton.setSize(new Dimension(40,10));
+        postPanel.add(addFriendButton);
+        addFriendButton.setLocation(new Point (0, 20));
+        addFriendButton.setActionCommand("add");
+        addFriendButton.addActionListener(this);
+
+
 
         add(redirectPanel);
         add(postPanel);
@@ -112,9 +124,7 @@ public class Page extends JPanel implements ActionListener, FocusListener, KeyLi
             MainFrame.setLocation (new Point (300, 230));
             MainFrame.getContentPane().setBackground(mainColor);
         }
-        if (e.getActionCommand().equals("behavior")) {
-            System.out.println ("Redirecting to Behavioral Suggestions");
-        }
+
         if (e.getActionCommand().equals("friends")) {
             System.out.println ("Redirecting to Friends");
         }
@@ -146,7 +156,31 @@ public class Page extends JPanel implements ActionListener, FocusListener, KeyLi
         }
         if (e.getActionCommand().equals("home")){
             System.out.println ("Going back to the dashboard");
-            Runner.getRunnerInstance().changeFrame(new Page(Runner.getUser()));
+            Runner.getRunnerInstance().changeFrame(new Dashboard());
+        }
+        if (e.getActionCommand().equals("add")){
+            System.out.println ("Adding a Friend");
+
+            //check to see if user is already in database
+            ResultSet rs = Runner.query("SELECT * FROM friends where email = '\" + Runner.getUser().getEmail() + \"' );");
+
+            try {
+                System.out.println ( Runner.getUser().getEmail());
+                System.out.println (user.getNameFirst() + " " + user.getNameLast());
+
+                ResultSet r = Runner.query("SELECT friend FROM friends WHERE email = '" + Runner.getUser().getEmail() + "' AND friend = '" + user.getNameFirst() + " " + user.getNameLast() +  "';");
+                if (r.next()) {
+                    System.out.println("Already friends");
+                    JOptionPane.showMessageDialog(null, "You are already friends with " + r.getString(1) + " " + user.getNameLast());
+                }
+                else {
+                    System.out.println("Added friends");
+                    Runner.update("INSERT INTO friends values('" + Runner.getUser().getEmail() + "', '" + user.getNameFirst() + " " + user.getNameLast() + "' );");
+                    JOptionPane.showMessageDialog(null, "Added " + r.getString(1) + "!");
+                }
+            } catch (SQLException ex) {
+                System.err.println(ex);
+            }
         }
     }
 

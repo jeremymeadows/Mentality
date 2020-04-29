@@ -40,7 +40,7 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
         JButton[] buttons = new JButton[BUTTONNUM];
         Dimension buttonSize = new Dimension(200,40);
         String[] buttonLabels = { "Mood Survey", "Friends", "Diary", "Weekly Report", "Happiness Graph" };
-        String[] buttonCommands = { "survey", "behavior", "friends", "diary", "report", "graph" };
+        String[] buttonCommands = { "survey", "friends", "diary", "report", "graph" };
         Point[] buttonLocs = {
                 new Point(0, 100), new Point(0, 170),
                 new Point(0, 240), new Point(0, 310), new Point(0, 380)
