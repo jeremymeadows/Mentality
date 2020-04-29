@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 
 import static Mentality.utils.CustomUtilities.ColorPalette.mainColor;
 
-public class Mood extends JDialog implements ActionListener{
+public class Mood extends JDialog implements ActionListener {
     private JButton peopleSurvey = new JButton("Fill out People Survey");
     private JButton sleepSurvey = new JButton("Fill out Sleep Survey");
     private JButton exerciseSurvey = new JButton("Fill out Exercise Survey");
@@ -74,7 +74,6 @@ public class Mood extends JDialog implements ActionListener{
         });
 
 
-//        contentPane.add(calendar);
         calendarPanel.add(calendar);
         scorePanel.add(happyLabel);
         scorePanel.add(starRater1);

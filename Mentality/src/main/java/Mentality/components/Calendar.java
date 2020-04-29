@@ -16,6 +16,7 @@ public class Calendar extends JPanel implements ItemListener, MouseListener {
     JPanel p1, p2;
     JComboBox<String> month;
     JComboBox<Integer> year;
+    JLabel sel;
     final int yearmin = 2020, yearmax = 2030;
     String[] weekdays = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
     String[] months = { "January", "February", "March", "April", "May", "June",
@@ -102,14 +103,18 @@ public class Calendar extends JPanel implements ItemListener, MouseListener {
     public void mouseClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getSource().getClass().equals(JLabel.class)) {
             JLabel l = (JLabel)mouseEvent.getSource();
-            System.out.println(months[month.getSelectedIndex()] + ' ' + l.getText() +
-                    ", " + (yearmin + year.getSelectedIndex()));
-            l.setText("*");
-            l.setBackground(Color.green);
-            selected[1] = months[month.getSelectedIndex()];
+
+            if (sel != null) {
+                sel.setText(selected[0]);
+            }
+            sel = l;
+
             selected[0] = l.getText();
+            selected[1] = months[month.getSelectedIndex()];
             selected[2] = String.valueOf(yearmin + year.getSelectedIndex());
 
+            l.setText("*");
+            l.setBackground(Color.green);
             p2.repaint();
         }
     }
