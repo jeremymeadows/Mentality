@@ -77,16 +77,22 @@ public class Report extends JDialog {
         text.setEditable(false);
         labelPanel.add(text);
         text = new JTextField ("Activity that puts you in the best mood:");
+        text.setEditable(false);
         labelPanel.add(text);
         text = new JTextField ("Activity that puts you in the worst mood:");
+        text.setEditable(false);
         labelPanel.add(text);
         text = new JTextField ("Person that puts you in the best mood:");
+        text.setEditable(false);
         labelPanel.add(text);
         text = new JTextField ("Person that puts you in the worst mood:");
+        text.setEditable(false);
         labelPanel.add(text);
         text = new JTextField ("Best day of the week:");
+        text.setEditable(false);
         labelPanel.add(text);
         text = new JTextField ("Worst day of the week:");
+        text.setEditable(false);
         labelPanel.add(text);
         topPanel.add(labelPanel);
     }
@@ -102,16 +108,22 @@ public class Report extends JDialog {
         text.setEditable(false);
         resultsPanel.add(text);
         text = new JTextField (bestActivity);
+        text.setEditable(false);
         resultsPanel.add(text);
         text = new JTextField (worstActivity);
+        text.setEditable(false);
         resultsPanel.add(text);
         text = new JTextField (bestPerson);
+        text.setEditable(false);
         resultsPanel.add(text);
         text = new JTextField (worstPerson);
+        text.setEditable(false);
         resultsPanel.add(text);
         text = new JTextField (bestDay);
+        text.setEditable(false);
         resultsPanel.add(text);
         text = new JTextField (worstDay);
+        text.setEditable(false);
         resultsPanel.add(text);
         topPanel.add(resultsPanel);
 
