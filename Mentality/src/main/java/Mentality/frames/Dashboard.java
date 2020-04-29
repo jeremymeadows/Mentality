@@ -15,7 +15,7 @@ import java.awt.event.*;
 import java.util.Date;
 
 public class Dashboard extends JPanel implements ActionListener, FocusListener, KeyListener {
-    private static final int BUTTONNUM = 6;
+    private static final int BUTTONNUM = 5;
 
     public Dashboard() {
         super();
@@ -39,10 +39,10 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
 
         JButton[] buttons = new JButton[BUTTONNUM];
         Dimension buttonSize = new Dimension(200,40);
-        String[] buttonLabels = { "Mood Survey", "Behavioral Suggestion", "Friends", "Diary", "Weekly Report", "Happiness Graph" };
+        String[] buttonLabels = { "Mood Survey", "Friends", "Diary", "Weekly Report", "Happiness Graph" };
         String[] buttonCommands = { "survey", "behavior", "friends", "diary", "report", "graph" };
         Point[] buttonLocs = {
-                new Point(0, 30), new Point(0, 100), new Point(0, 170),
+                new Point(0, 100), new Point(0, 170),
                 new Point(0, 240), new Point(0, 310), new Point(0, 380)
         };
         for (int i = 0; i < BUTTONNUM; ++i) {
@@ -106,9 +106,7 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
             MainFrame.setLocation (new Point (300, 230));
             MainFrame.getContentPane().setBackground(mainColor);
         }
-        if (e.getActionCommand().equals("behavior")) {
-            System.out.println ("Redirecting to Behavioral Suggestions");
-        }
+
         if (e.getActionCommand().equals("friends")) {
             System.out.println ("Redirecting to Friends");
         }
