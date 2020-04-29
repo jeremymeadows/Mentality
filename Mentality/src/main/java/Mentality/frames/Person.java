@@ -42,6 +42,9 @@ public class Person extends JDialog implements ActionListener {
                 String un = r.getString("username");
                 users.add(un);
             }
+            //remove the current user
+            users.remove(Runner.getUser().getUname());
+
         } catch (SQLException ex) {
             System.err.println(ex);
         }

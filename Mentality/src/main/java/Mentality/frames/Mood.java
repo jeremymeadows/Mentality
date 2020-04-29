@@ -22,10 +22,14 @@ public class Mood extends JDialog implements ActionListener {
     private JButton exerciseSurvey = new JButton("Fill out Exercise Survey");
     private JButton submitSurvey = new JButton("Submit Survey");
 
+    /******************************
+     * Singleton design pattern
+     ******************************/
     Calendar calendar;
     int happiness, stress, sadness;
     JFrame parent;
     String title;
+
 
     public Mood(JFrame parent, String title) {
         super(parent, title);
