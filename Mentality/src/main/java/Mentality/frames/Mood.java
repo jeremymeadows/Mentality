@@ -3,11 +3,16 @@ package Mentality.frames;
 import Mentality.Runner;
 import Mentality.components.Calendar;
 import Mentality.components.StarRater;
+import Mentality.utils.BadDataStorage;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.Format;
+import java.util.Formatter;
+import java.util.HashMap;
+import java.util.Map;
 
 import static Mentality.utils.CustomUtilities.ColorPalette.mainColor;
 
@@ -17,6 +22,7 @@ public class Mood extends JDialog implements ActionListener {
     private JButton exerciseSurvey = new JButton("Fill out Exercise Survey");
     private JButton submitSurvey = new JButton("Submit Survey");
 
+    Calendar calendar;
     int happiness, stress, sadness;
     JFrame parent;
     String title;
@@ -25,6 +31,7 @@ public class Mood extends JDialog implements ActionListener {
         super(parent, title);
         this.parent = parent;
         this.title = title;
+        calendar = new Calendar();
 
         setLayout(new GridLayout(0, 1));
 
@@ -38,13 +45,6 @@ public class Mood extends JDialog implements ActionListener {
 
         JPanel otherSurveys = new JPanel();
         otherSurveys.setLayout(new GridLayout(0, 1));
-
-
-
-        Calendar calendar = new Calendar();
-        String day = calendar.selected[0];
-        String month = calendar.selected[1];
-        String year = calendar.selected[2];
 
         JLabel happyLabel = new JLabel("How happy did you feel?");
         StarRater starRater1 = new StarRater(10, 0, 0);
@@ -73,7 +73,6 @@ public class Mood extends JDialog implements ActionListener {
             }
         });
 
-
         calendarPanel.add(calendar);
         scorePanel.add(happyLabel);
         scorePanel.add(starRater1);
@@ -99,9 +98,7 @@ public class Mood extends JDialog implements ActionListener {
         submitSurvey.addActionListener(this);
         submitSurvey.setActionCommand("submit");
 
-
         setSize(200, 300);
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
@@ -110,28 +107,32 @@ public class Mood extends JDialog implements ActionListener {
         if (e.getActionCommand().equals("people")){
             System.out.println("Redirecting to the people survey");
             JDialog MainFrame = new Person(Runner.getFrame(),"Survey");
-//            MainFrame.setSize(new Dimension(600, 600));
             MainFrame.setLocation (new Point (300, 230));
             MainFrame.getContentPane().setBackground(mainColor);
         }
         if (e.getActionCommand().equals("sleep")){
             System.out.println("Redirecting to the sleep survey");
             JDialog MainFrame = new Sleep(Runner.getFrame(),"Survey");
-//            MainFrame.setSize(new Dimension(600, 600));
             MainFrame.setLocation (new Point (300, 230));
             MainFrame.getContentPane().setBackground(mainColor);
         }
         if (e.getActionCommand().equals("exercise")){
             System.out.println("Redirecting to the exercise survey");
             JDialog MainFrame = new Exercise(Runner.getFrame(),"Survey");
-//            MainFrame.setSize(new Dimension(600, 600));
             MainFrame.setLocation (new Point (300, 230));
             MainFrame.getContentPane().setBackground(mainColor);
         }
         if (e.getActionCommand().equals("submit")){
             System.out.println("Submitting survey");
+            // this is the format from which MySQL can read dates
+            String dateStr = String.format("\"%s-%02d-%02d\"", calendar.selected[2],
+                    Integer.parseInt(calendar.selected[1]), Integer.parseInt(calendar.selected[0]));
+
+            for (Map.Entry<Object, Object> q : BadDataStorage.data.entrySet()) {
+                Runner.update(q.getValue().toString().replaceAll("\\$DATE", dateStr));
+            }
+            BadDataStorage.data = new HashMap<>();
             this.dispose();
         }
-
     }
 }

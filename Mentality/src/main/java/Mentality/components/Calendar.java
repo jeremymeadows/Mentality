@@ -23,7 +23,7 @@ public class Calendar extends JPanel implements ItemListener, MouseListener {
             "July", "August", "September", "October", "November", "December" };
     int[] days ={ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-    public String [] selected = new String[3];
+    public String[] selected = new String[3]; // day, month, year
 
     public Calendar() {
         super();
@@ -110,7 +110,7 @@ public class Calendar extends JPanel implements ItemListener, MouseListener {
             sel = l;
 
             selected[0] = l.getText();
-            selected[1] = months[month.getSelectedIndex()];
+            selected[1] = String.valueOf(month.getSelectedIndex() + 1);
             selected[2] = String.valueOf(yearmin + year.getSelectedIndex());
 
             l.setText("*");

@@ -1,0 +1,103 @@
+MySQL [mentality]> show tables;
++---------------------+
+| Tables_in_mentality |
++---------------------+
+| exercise            |
+| friends             |
+| journal             |
+| mood                |
+| people              |
+| sleep               |
+| users               |
+| wall                |
++---------------------+
+8 rows in set (0.046 sec)
+
+MySQL [mentality]> describe exercise;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| email       | varchar(64) | NO   |     | NULL    |       |
+| date        | date        | YES  |     | NULL    |       |
+| activity    | varchar(32) | YES  |     | NULL    |       |
+| duration    | int(9)      | YES  |     | NULL    |       |
+| description | text        | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.052 sec)
+
+MySQL [mentality]> describe friends;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| email  | varchar(64) | NO   |     | NULL    |       |
+| friend | varchar(32) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.046 sec)
+
+MySQL [mentality]> describe journal;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| email   | varchar(64) | NO   |     | NULL    |       |
+| date    | date        | YES  |     | NULL    |       |
+| journal | text        | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.049 sec)
+
+MySQL [mentality]> describe mood;
++--------+---------------+------+-----+---------+-------+
+| Field  | Type          | Null | Key | Default | Extra |
++--------+---------------+------+-----+---------+-------+
+| email  | varchar(64)   | NO   |     | NULL    |       |
+| date   | date          | YES  |     | NULL    |       |
+| scores | decimal(10,0) | YES  |     | NULL    |       |
++--------+---------------+------+-----+---------+-------+
+3 rows in set (0.046 sec)
+
+MySQL [mentality]> describe people;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| email  | varchar(64) | YES  |     | NULL    |       |
+| date   | date        | YES  |     | NULL    |       |
+| person | varchar(32) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.049 sec)
+
+MySQL [mentality]> describe sleep;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| email    | varchar(64)  | NO   |     | NULL    |       |
+| date     | date         | YES  |     | NULL    |       |
+| duration | int(9)       | YES  |     | NULL    |       |
+| quality  | decimal(3,1) | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+4 rows in set (0.048 sec)
+
+MySQL [mentality]> describe users;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| email     | varchar(64) | NO   | PRI | NULL    |       |
+| password  | varchar(32) | YES  |     | NULL    |       |
+| namefirst | varchar(32) | YES  |     | NULL    |       |
+| namelast  | varchar(32) | YES  |     | NULL    |       |
+| username  | varchar(32) | YES  |     | NULL    |       |
+| id        | int(11)     | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+6 rows in set (0.050 sec)
+
+MySQL [mentality]> describe wall;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| email     | varchar(64) | NO   |     | NULL    |       |
+| timestamp | datetime    | YES  |     | NULL    |       |
+| author    | varchar(64) | YES  |     | NULL    |       |
+| post      | text        | YES  |     | NULL    |       |
+| mood      | int(11)     | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.047 sec)
+
+MySQL [mentality]>

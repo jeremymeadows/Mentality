@@ -1,6 +1,7 @@
 package Mentality.frames;
 
 import Mentality.Runner;
+import Mentality.utils.BadDataStorage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,16 +11,33 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Vector;
 
 import static Mentality.utils.CustomUtilities.ColorPalette.mainColor;
 import static Mentality.utils.CustomUtilities.initJButton;
 
 public class Exercise extends JDialog implements ActionListener {
-    int workout;
     String description;
-    JComboBox comboBox;
+    JComboBox workoutList, durationList;
     DefaultComboBoxModel comboBoxModel;
+    JTextArea desc;
+    String[] workouts = {
+            "aerobic",
+            "strength",
+            "flexibility",
+            "balance"
+    };
+    HashMap<String, Integer> duration = new HashMap<String, Integer>(){{
+            put("15 min", 15);
+            put("30 min", 30);
+            put("45 min", 45);
+            put("60 min", 60);
+            put("1 hr 15 min", 75);
+            put("1 hr 30 min", 90);
+            put("1 hr 45 min", 105);
+            put("2 hr+", 120);
+    }};
 
     public Exercise (JFrame parent, String title){
         super(parent, title);
@@ -28,17 +46,11 @@ public class Exercise extends JDialog implements ActionListener {
 
         Vector comboBoxItems=new Vector();
         comboBoxModel = new DefaultComboBoxModel(comboBoxItems);
-        final JComboBox comboBox = new JComboBox(comboBoxModel);
 
         JPanel workoutPanel = new JPanel();
         workoutPanel.setLayout(new GridLayout(0,1));
         JLabel label = new JLabel("What type of workout?");
-        Vector<Object> workouts = new Vector<>();
-        workouts.add("aerobic");
-        workouts.add("strength");
-        workouts.add("flexibility");
-        workouts.add("balance");
-        JComboBox workoutList = new JComboBox(workouts);
+        workoutList = new JComboBox(workouts);
         workoutList.setSelectedIndex(0);
         workoutPanel.add(label);
         workoutPanel.add(workoutList);
@@ -46,38 +58,28 @@ public class Exercise extends JDialog implements ActionListener {
         JPanel durationPanel = new JPanel();
         durationPanel.setLayout(new GridLayout(0,1));
         label = new JLabel("For how long?");
-        Vector<Object> duration = new Vector<>();
-        duration.add("15 min");
-        duration.add("30 min");
-        duration.add("45 min");
-        duration.add("60 min");
-        duration.add("1 hr 15 min");
-        duration.add("1 hr 30 min");
-        duration.add("1 hr 45 min");
-        duration.add("2 hr+");
 
-        JComboBox durationList = new JComboBox(duration);
+        durationList = new JComboBox(duration.keySet().toArray());
         durationList.setSelectedIndex(0);
         durationPanel.add(label);
         durationPanel.add(durationList);
 
-
         JPanel descriptionPanel = new JPanel();
         descriptionPanel.setLayout(new GridLayout(0,1));
-        JTextArea area = new JTextArea("Workout Description", 4, 60);
-        descriptionPanel.add(area);
-        //add default text to post box that disappears when selected
-        area.addFocusListener(new FocusListener() {
+        desc = new JTextArea("Workout Description", 4, 60);
+        descriptionPanel.add(desc);
+        // add default text to post box that disappears when selected
+        desc.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {
-                area.setText("");
+                desc.setText("");
             }
 
             public void focusLost(FocusEvent e) {
-                description = area.getText()
+                description = desc.getText()
                         .replaceAll("'", "\\\\'")
                         .replaceAll("\"", "\\\"");
-                if (area.getText().equals("Workout Description") || area.getText().equals("")) {
-                    area.setText("Workout Description");
+                if (desc.getText().equals("Workout Description") || desc.getText().equals("")) {
+                    desc.setText("Workout Description");
                 }
             }
         });
@@ -95,18 +97,21 @@ public class Exercise extends JDialog implements ActionListener {
 
         setSize(250, 200);
         setVisible(true);
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("complete")){
-            System.out.println("Sleep survey completed");
+        if (e.getActionCommand().equals("complete")) {
+            String q = ("INSERT INTO exercise values(" +
+                    "\"" + Runner.getUser().getEmail() + "\", " +
+                    "$DATE, " +
+                    "\"" + workouts[workoutList.getSelectedIndex()] + "\", " +
+                    duration.values().toArray()[durationList.getSelectedIndex()] + ", " +
+                    "\"" + desc.getText() + "\");"
+            );
+            BadDataStorage.data.put("exercise", q);
+            System.out.println("Exercise survey completed");
             this.dispose();
         }
-
     }
-
 }
-
-

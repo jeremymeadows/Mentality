@@ -2,6 +2,7 @@ package Mentality.frames;
 
 import Mentality.Runner;
 import Mentality.components.StarRater;
+import Mentality.utils.BadDataStorage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +14,8 @@ import static Mentality.utils.CustomUtilities.initJButton;
 
 public class Sleep extends JDialog implements ActionListener {
     int energy;
+    JComboBox hoursList;
+    String[] hours = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10+" };
 
     public Sleep (JFrame parent, String title){
         super(parent, title);
@@ -22,8 +25,7 @@ public class Sleep extends JDialog implements ActionListener {
         JPanel hoursPanel = new JPanel();
         hoursPanel.setLayout(new GridLayout(0,1));
         JLabel label = new JLabel("How many hours of sleep did you get?");
-        String[] hours = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10+" };
-        JComboBox hoursList = new JComboBox(hours);
+        hoursList = new JComboBox(hours);
         hoursList.setSelectedIndex(7);
         hoursList.addActionListener(this);
         hoursPanel.add(label);
@@ -53,15 +55,20 @@ public class Sleep extends JDialog implements ActionListener {
 
         setSize(250, 150);
         setVisible(true);
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("complete")){
+            String q = ("INSERT INTO sleep values(" +
+                    "\"" + Runner.getUser().getEmail() + "\", " +
+                    "$DATE, " +
+                    hours[hoursList.getSelectedIndex()] + ", " +
+                    energy + ");"
+            );
+            BadDataStorage.data.put("sleep", q);
             System.out.println("Sleep survey completed");
             this.dispose();
         }
-
     }
 }
