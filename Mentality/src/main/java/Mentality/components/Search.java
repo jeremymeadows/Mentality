@@ -44,6 +44,8 @@ public class Search extends JPanel implements ActionListener {
                 String un = r.getString("username");
                 users.add(un);
             }
+            //remove the current user from search list
+            users.remove(Runner.getUser().getUname());
         } catch (SQLException ex) {
             System.err.println(ex);
         }

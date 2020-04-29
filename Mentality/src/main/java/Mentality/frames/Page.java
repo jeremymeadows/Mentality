@@ -171,7 +171,7 @@ public class Page extends JPanel implements ActionListener, FocusListener, KeyLi
                 ResultSet r = Runner.query("SELECT friend FROM friends WHERE email = '" + Runner.getUser().getEmail() + "' AND friend = '" + user.getNameFirst() + " " + user.getNameLast() +  "';");
                 if (r.next()) {
                     System.out.println("Already friends");
-                    JOptionPane.showMessageDialog(null, "You are already friends with " + r.getString(1) + " " + user.getNameLast());
+                    JOptionPane.showMessageDialog(null, "You are already friends with " + r.getString(1));
                 }
                 else {
                     System.out.println("Added friends");
