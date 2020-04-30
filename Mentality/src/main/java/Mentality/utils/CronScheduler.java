@@ -1,30 +1,41 @@
 package Mentality.utils;
 
 import Mentality.DomainLayer.ReportMaker;
+import Mentality.DomainLayer.ReportObj;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.Date;
 
 public class CronScheduler {
-    ReportMaker reportMaker;
+    ReportMaker reportMaker = ReportMaker.getInstance();
     Date date;
 
-    //change to update surveys every minute
-    //send report every Sunday at 6am
-//    @Scheduled (cron = "0 0 6 * * SUN")
+    // static variable single_instance of type Singleton
+    private static CronScheduler single_instance = null;
+
+    // static method to create instance of Singleton class
+    public static CronScheduler getInstance()
+    {
+        if (single_instance == null)
+            single_instance = new CronScheduler();
+
+        return single_instance;
+    }
+
+    //update report every 20 seconds
     @Scheduled(cron = "*/20 * * * * *")
     public void run () throws InterruptedException{
         date = new Date();
-        reportMaker = new ReportMaker();
+        reportMaker.setReport(new ReportObj());
         reportMaker.generateReport();
         System.out.println("Cron scheduler is running at " + date);
         Thread.sleep(10000);
 
     }
 
-    public Date getDate() {
-        if (date == null)
-            date = new Date();
-        return date;
+    public ReportObj getReportObj() {
+        reportMaker.getReportObj().averageMoods();
+        return reportMaker.getReportObj();
+
     }
 }

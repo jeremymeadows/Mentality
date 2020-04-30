@@ -1,5 +1,7 @@
 package Mentality.frames;
 
+import Mentality.DomainLayer.ReportObj;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,20 +12,12 @@ import java.awt.event.ActionListener;
  **********************************/
 
 public class ReportSurvey extends JDialog {
-    //default dummy values
-    Double avgHappiness = 8.2;
-    String bestActivity = "Software Engineering";
-    String worstActivity = "Isolation";
-    String bestPerson = "Cerny";
-    String worstPerson = "Perez Hilton";
-    String bestDay = "Monday";
-    String worstDay = "Tuesday";
-
-    private static final long serialVersionUID = 2L;
     JPanel topPanel;
+    ReportObj reportObj;
 
-    public ReportSurvey(JFrame parent, String title) {
+    public ReportSurvey(JFrame parent, String title, ReportObj reportObj) {
         super(parent, title);
+        this.reportObj = reportObj;
 
         //panel to hold all panels
         setLayout(new GridBagLayout());
@@ -75,24 +69,14 @@ public class ReportSurvey extends JDialog {
         JTextField text = new JTextField ("Average happiness:");
         text.setEditable(false);
         labelPanel.add(text);
-        text = new JTextField ("Activity that puts you in the best mood:");
+        text = new JTextField ("Average sadness:");
         text.setEditable(false);
         labelPanel.add(text);
-        text = new JTextField ("Activity that puts you in the worst mood:");
+        text = new JTextField ("Average stress:");
         text.setEditable(false);
         labelPanel.add(text);
-        text = new JTextField ("Person that puts you in the best mood:");
-        text.setEditable(false);
-        labelPanel.add(text);
-        text = new JTextField ("Person that puts you in the worst mood:");
-        text.setEditable(false);
-        labelPanel.add(text);
-        text = new JTextField ("Best day of the week:");
-        text.setEditable(false);
-        labelPanel.add(text);
-        text = new JTextField ("Worst day of the week:");
-        text.setEditable(false);
-        labelPanel.add(text);
+
+
         topPanel.add(labelPanel);
     }
 
@@ -102,43 +86,26 @@ public class ReportSurvey extends JDialog {
         resultsPanel.setLayout(new GridLayout(0, 1));
         resultsPanel.setBackground(new Color(180, 180, 200));
 
+        //calculate the report values
+        reportObj.averageMoods();
+
         // Add labels to resultsPanel
-        JTextField text = new JTextField ((String.valueOf(avgHappiness)));
+        JTextField text = new JTextField ((String.valueOf(reportObj.getAverageHappiness())));
         text.setEditable(false);
         resultsPanel.add(text);
-        text = new JTextField (bestActivity);
+
+        text = new JTextField ((String.valueOf(reportObj.getAverageSadness())));
         text.setEditable(false);
         resultsPanel.add(text);
-        text = new JTextField (worstActivity);
+
+        text = new JTextField ((String.valueOf(reportObj.getAverageStress())));
         text.setEditable(false);
         resultsPanel.add(text);
-        text = new JTextField (bestPerson);
-        text.setEditable(false);
-        resultsPanel.add(text);
-        text = new JTextField (worstPerson);
-        text.setEditable(false);
-        resultsPanel.add(text);
-        text = new JTextField (bestDay);
-        text.setEditable(false);
-        resultsPanel.add(text);
-        text = new JTextField (worstDay);
-        text.setEditable(false);
-        resultsPanel.add(text);
+
+
         topPanel.add(resultsPanel);
 
     }
-
-    public void setReportValues(Double avgHappiness, String bestActivity, String worstActivity, String bestPerson,
-            String worstPerson, String bestDay, String worstDay){
-        this.avgHappiness = avgHappiness;
-        this.bestActivity = bestActivity;
-        this.worstActivity = worstActivity;
-        this.bestPerson = bestPerson;
-        this.worstPerson = worstPerson;
-        this.bestDay = bestDay;
-        this.worstDay = worstDay;
-    }
-
 
     // an action listener to be used when an action is performed
     // (e.g. button is pressed)

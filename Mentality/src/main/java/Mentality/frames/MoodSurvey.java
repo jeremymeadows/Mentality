@@ -127,14 +127,25 @@ public class MoodSurvey extends JDialog implements ActionListener {
         if (e.getActionCommand().equals("submit")){
             System.out.println("Submitting survey");
 
-//            // this is the format from which MySQL can read dates
-//            String dateStr = String.format("\"%s-%02d-%02d\"", calendar.selected[2],
-//                    Integer.parseInt(calendar.selected[1]), Integer.parseInt(calendar.selected[0]));
-//
-//            for (Map.Entry<Object, Object> q : BadDataStorage.data.entrySet()) {
-//                Runner.update(q.getValue().toString().replaceAll("\\$DATE", dateStr));
-//            }
-//            BadDataStorage.data = new HashMap<>();
+            // this is the format from which MySQL can read dates
+            String dateStr = String.format("\"%s-%02d-%02d\"", calendar.selected[2],
+                    Integer.parseInt(calendar.selected[1]), Integer.parseInt(calendar.selected[0]));
+
+
+            for (Map.Entry<Object, Object> q : BadDataStorage.data.entrySet()) {
+                Runner.update(q.getValue().toString().replaceAll("\\$DATE", dateStr));
+            }
+            //insert into mood table as well
+            String sql = ("INSERT INTO mood VALUES(" +
+                    "\"" + Runner.getUser().getEmail() + "\", " +
+                    "$DATE, " + happiness + ", " + sadness + ", " + stress + ");");
+            sql = sql.replaceAll("\\$DATE", dateStr);
+
+            System.out.println (Runner.getUser().getEmail() + " " + dateStr + " " + happiness + " " + sadness + " " + stress);
+
+            Runner.update(sql);
+
+            BadDataStorage.data = new HashMap<>();
             this.dispose();
         }
     }

@@ -4,43 +4,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReportObj {
-    public ReportObj(){};
+    public ReportObj(){}
 
     protected List<ExerciseObj> exerciseObjs = new ArrayList();
     protected List<SleepObj> sleepObjs = new ArrayList();
     protected List<MoodObj> moodObjs = new ArrayList();
     protected List<PersonObj> personObjs = new ArrayList();
 
+    double averageHappiness = 0, averageSadness = 0, averageStress = 0;
 
-    public List<ExerciseObj> getExerciseObjs() {
-        return exerciseObjs;
+    public double getAverageHappiness() {
+        return averageHappiness;
     }
 
-    public void setExerciseObjs(List<ExerciseObj> exerciseObjs) {
-        this.exerciseObjs = exerciseObjs;
+
+    public double getAverageSadness() {
+        return averageSadness;
     }
 
-    public List<SleepObj> getSleepObjs() {
-        return sleepObjs;
+    public double getAverageStress() {
+        return averageStress;
     }
 
-    public void setSleepObjs(List<SleepObj> sleepObjs) {
-        this.sleepObjs = sleepObjs;
+    public void averageMoods(){
+        int sumHappy = 0, sumSad = 0, sumStress = 0;
+
+        for (MoodObj mood : moodObjs){
+            sumHappy += mood.getHappiness();
+            System.out.println ("sumHappy " + sumHappy);
+            sumSad += mood.getSadness();
+            sumStress += mood.getStress();
+        }
+
+        if (moodObjs.size() > 0) {
+            averageHappiness = sumHappy / moodObjs.size();
+            averageSadness = sumSad / moodObjs.size();
+            averageStress = sumStress / moodObjs.size();
+        }
+
+        System.out.println ("average happiness " + averageHappiness);
     }
 
-    public List<MoodObj> getMoodObjs() {
-        return moodObjs;
-    }
 
-    public void setMoodObjs(List<MoodObj> moodObjs) {
-        this.moodObjs = moodObjs;
-    }
-
-    public List<PersonObj> getPersonObjs() {
-        return personObjs;
-    }
-
-    public void setPersonObjs(List<PersonObj> personObjs) {
-        this.personObjs = personObjs;
-    }
 }

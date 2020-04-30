@@ -17,6 +17,7 @@ import java.util.Date;
 
 public class Dashboard extends JPanel implements ActionListener {
     private static final int BUTTONNUM = 5;
+    CronScheduler cron = CronScheduler.getInstance();
 
     public Dashboard() {
         super();
@@ -126,17 +127,14 @@ public class Dashboard extends JPanel implements ActionListener {
         if (e.getActionCommand().equals("report")) {
             System.out.println ("Opening Report");
 
-            JDialog reportDialogue = new ReportSurvey(Runner.getFrame(),"Report");
+            JDialog reportDialogue = new ReportSurvey(Runner.getFrame(),"Report", cron.getReportObj());
             reportDialogue.setSize(new Dimension(600, 600));
             reportDialogue.setLocation (new Point (300, 230));
             reportDialogue.getContentPane().setBackground(mainColor);
         }
         if (e.getActionCommand().equals("graph")) {
             System.out.println ("Opening Happiness Graph");
-            CronScheduler cs = new CronScheduler();
-            Date d = cs.getDate();
-            String date = d.toString();
-            JDialog graphDialogue = new HappinessGraph(Runner.getFrame(),"Happiness Graph", date);
+            JDialog graphDialogue = new HappinessGraph(Runner.getFrame(),"Happiness Graph", new Date().toString());
 
             graphDialogue.setSize(new Dimension(1000, 600));
             graphDialogue.setLocation (new Point (300, 230));

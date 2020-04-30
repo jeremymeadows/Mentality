@@ -1,6 +1,7 @@
 package Mentality.DomainLayer;
 
 import Mentality.Runner;
+import Mentality.utils.CronScheduler;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +9,29 @@ import java.sql.SQLException;
 public class ReportMaker {
     ReportObj report;
 
-    public ReportMaker(){report = new ReportObj();}
+    //ReportMaker is a singleton so we will need to set the report in
+    //a separate function instead of constructor
+    public void setReport(ReportObj report) {
+        this.report = report;
+    }
+
+    public ReportMaker(){}
+
+    // static variable single_instance of type Singleton
+    private static ReportMaker single_instance = null;
+
+    // static method to create instance of Singleton class
+    public static ReportMaker getInstance()
+    {
+        if (single_instance == null)
+            single_instance = new ReportMaker();
+
+        return single_instance;
+    }
+
+    public ReportObj getReportObj() {
+        return report;
+    }
 
     public void generateExerciseData(){
         System.out.println("generating exercise data");
@@ -85,7 +108,7 @@ public class ReportMaker {
         }
     }
 
-    public void generateMoodyData(){
+    public void generateMoodData(){
         System.out.println("generating mood data");
         try {
 //            get data from past 7 days from database
@@ -94,27 +117,19 @@ public class ReportMaker {
 
             while(rs.next()) {
                 MoodObj moodObj = new MoodObj();
-                moodObj.setScore(Double.parseDouble(rs.getString("scores")));
+                moodObj.setHappiness(Integer.parseInt(rs.getString("happiness")));
+                moodObj.setSadness(Integer.parseInt(rs.getString("sadness")));
+                moodObj.setStress(Integer.parseInt(rs.getString("stress")));
                 report.moodObjs.add(moodObj);
-                System.out.println(moodObj.getScore());
+                System.out.println(moodObj.getHappiness() + " " + moodObj.getSadness() + " " + moodObj.getStress());
             }
 
             rs.close();
-
-            ResultSet r2 = Runner.query("SELECT * FROM mood");
-
-            System.out.println(("All the moods"));
-            while(r2.next()) {
-                System.out.println("score: " + r2.getString("scores"));
-                System.out.println("date: " + r2.getString("date"));
-
-            }
 
         }catch (SQLException ex){
             System.err.println(ex);
         }
     }
-
 
 
     public void generateReport()  {
@@ -123,7 +138,7 @@ public class ReportMaker {
         generateExerciseData();
         generateSleepData();
         generatePersonData();
-        generateMoodyData();
+        generateMoodData();
 
         }
 
