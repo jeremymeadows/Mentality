@@ -37,6 +37,8 @@ public class CronScheduler {
         System.out.println("Sending data for updated Reports GUIS...");
         reportMaker.getReportObj().averageMoods();
         reportMaker.getReportObj().workoutInfo();
+        reportMaker.getReportObj().averageSleep();
+        reportMaker.getReportObj().personInfo();
         return reportMaker.getReportObj();
 
     }

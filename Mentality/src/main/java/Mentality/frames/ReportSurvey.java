@@ -87,6 +87,24 @@ public class ReportSurvey extends JDialog {
         text = new JTextField ("Worst workout(s) produced mood of:");
         text.setEditable(false);
         labelPanel.add(text);
+        text = new JTextField ("Best person(s):");
+        text.setEditable(false);
+        labelPanel.add(text);
+        text = new JTextField ("Best person(s) produced mood of:");
+        text.setEditable(false);
+        labelPanel.add(text);
+        text = new JTextField ("Worst person(s):");
+        text.setEditable(false);
+        labelPanel.add(text);
+        text = new JTextField ("Worst person(s) produced mood of:");
+        text.setEditable(false);
+        labelPanel.add(text);
+        text = new JTextField ("Average sleep duration:");
+        text.setEditable(false);
+        labelPanel.add(text);
+        text = new JTextField ("Average sleep quality:");
+        text.setEditable(false);
+        labelPanel.add(text);
 
         topPanel.add(labelPanel);
     }
@@ -126,6 +144,26 @@ public class ReportSurvey extends JDialog {
         resultsPanel.add(text);
 
         text = new JTextField ((String.valueOf(reportObj.getWorkoutWorstMood())));
+        text.setEditable(false);
+        resultsPanel.add(text);
+
+        text = new JTextField ((String.valueOf(reportObj.getBestPerson())));
+        text.setEditable(false);
+        resultsPanel.add(text);
+
+        text = new JTextField ((String.valueOf(reportObj.getBestPersonMood())));
+        text.setEditable(false);
+        resultsPanel.add(text);
+
+        text = new JTextField ((String.valueOf(reportObj.getWorstPerson())));
+        text.setEditable(false);
+        resultsPanel.add(text);
+
+        text = new JTextField ((String.valueOf(reportObj.getWorstPersonMood())));
+        text.setEditable(false);
+        resultsPanel.add(text);
+
+        text = new JTextField ((String.valueOf(reportObj.getAvgSleepQ())));
         text.setEditable(false);
         resultsPanel.add(text);
 

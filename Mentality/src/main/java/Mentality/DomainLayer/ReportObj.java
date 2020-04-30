@@ -13,6 +13,10 @@ public class ReportObj {
     double averageHappiness = 0, averageSadness = 0, averageStress = 0;
     String bestWorkout, worstWorkout;
     double workoutBestMood, workoutWorstMood;
+    double avgSleep = 0;
+    double avgSleepQ;
+    String bestPerson, worstPerson;
+    double bestPersonMood, worstPersonMood;
 
 
     public double getAverageHappiness() {
@@ -43,6 +47,30 @@ public class ReportObj {
 
     public double getWorkoutWorstMood() {
         return workoutWorstMood;
+    }
+
+    public double getAvgSleep() {
+        return avgSleep;
+    }
+
+    public double getAvgSleepQ() {
+        return avgSleepQ;
+    }
+
+    public String getBestPerson() {
+        return bestPerson;
+    }
+
+    public String getWorstPerson() {
+        return worstPerson;
+    }
+
+    public double getBestPersonMood() {
+        return bestPersonMood;
+    }
+
+    public double getWorstPersonMood() {
+        return worstPersonMood;
     }
 
     public void averageMoods(){
@@ -86,7 +114,10 @@ public class ReportObj {
             String key = workout;
             int value = Integer.parseInt(activityToCount.get(workout).toString());
             int sum = Integer.parseInt(activityToHappySum.get(workout).toString());
-            double average = sum / value;
+            double average = 0;
+            if (value != 0)
+                average = sum / value;
+
             if (average > max)
                 max = average;
 
@@ -112,6 +143,75 @@ public class ReportObj {
 
             this.worstWorkout = worstWorkoutString;
             this.workoutWorstMood = min;
+    }
+
+    public void averageSleep(){
+        int hours = 0;
+        int quality = 0;
+        int i = 0;
+        for (SleepObj sleep : sleepObjs){
+            hours += sleep.getDuration();
+            quality += sleep.getQuality();
+            i++;
+        }
+        if (i != 0){
+            avgSleep = hours / i;
+            avgSleepQ = quality / i;
+        }
+    }
+
+    //to determine the best person, we will take the average happiness score of each person
+    HashMap<String, Integer> personToCount = new HashMap<String, Integer>();
+    HashMap<String, Integer> personToHappySum = new HashMap<String, Integer>();
+    HashMap<String, Double> personToHappyAvg = new HashMap<String, Double>();
+
+
+
+    public void personInfo(){
+        for (PersonObj personObj : personObjs){
+            //find average happiness score of each type of exercise
+            int count = personToCount.containsKey(personObj.getName()) ? personToCount.get(personObj.getName()) : 0;
+            personToCount.put(personObj.getName(), count + 1);
+
+            int sum = personToHappySum.containsKey(personObj.getName()) ? personToHappySum.get(personObj.getName()) + personObj.getMood().getHappiness(): personObj.getMood().getHappiness();
+            personToHappySum.put(personObj.getName(), sum);
+        }
+
+        double max = 0;
+        double min = 11;
+        for (String workout: personToCount.keySet()){
+            String key = workout;
+            int value = Integer.parseInt(personToCount.get(workout).toString());
+            int sum = Integer.parseInt(personToHappySum.get(workout).toString());
+            double average = 0;
+            if (value != 0)
+                average = sum / value;
+
+            if (average > max)
+                max = average;
+
+            if (average < min )
+                min = average;
+
+            personToHappyAvg.put(workout, average);
+        }
+
+        String bestPersonString = "";
+        String worstPersonString = "";
+
+        for (String workout: personToHappyAvg.keySet()){
+            double avg = Double.parseDouble(personToHappyAvg.get(workout).toString());
+            if (avg == max)
+                bestPersonString += workout + " ";
+            if (avg == min)
+                worstPersonString += workout + " ";
+
+        }
+        this.bestPerson = bestPersonString;
+        this.bestPersonMood = max;
+
+        this.worstPerson = worstPersonString;
+        this.worstPersonMood = min;
     }
 
 
