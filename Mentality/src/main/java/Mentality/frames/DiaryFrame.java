@@ -3,6 +3,10 @@ package Mentality.frames;
 import javax.swing.*;
 import java.awt.*;
 
+/**********************************
+ * singleton design pattern
+ **********************************/
+
 public class DiaryFrame extends JDialog {
     private JTextArea diaryEntry;
     private JButton saveDiaryEntry;

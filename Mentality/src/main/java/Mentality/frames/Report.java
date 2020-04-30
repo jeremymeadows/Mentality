@@ -10,6 +10,10 @@ import java.awt.event.ActionListener;
 import static Mentality.utils.CustomUtilities.ColorPalette.mainColor;
 import static Mentality.utils.CustomUtilities.center;
 
+/**********************************
+ * singleton design pattern
+ **********************************/
+
 public class Report extends JDialog {
     //default dummy values
     Double avgHappiness = 8.2;

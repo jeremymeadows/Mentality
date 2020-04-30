@@ -7,6 +7,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**********************************
+ * singleton design pattern
+ **********************************/
+
 public class HappinessGraph extends JDialog {
     private static final long serialVersionUID = 1L;
 
