@@ -11,6 +11,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -18,6 +19,7 @@ import static Mentality.utils.CustomUtilities.ColorPalette.mainColor;
 import static Mentality.utils.CustomUtilities.initJButton;
 
 public class Exercise extends JDialog implements ActionListener {
+
     String description;
     JComboBox workoutList, durationList;
     DefaultComboBoxModel comboBoxModel;
@@ -115,3 +117,5 @@ public class Exercise extends JDialog implements ActionListener {
         }
     }
 }
+
+
