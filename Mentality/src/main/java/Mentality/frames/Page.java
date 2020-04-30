@@ -170,15 +170,16 @@ public class Page extends JPanel implements ActionListener, FocusListener, KeyLi
                 System.out.println ( Runner.getUser().getEmail());
                 System.out.println (user.getUname());
 
-                ResultSet r = Runner.query("SELECT friend FROM friends WHERE email = '" + Runner.getUser().getEmail() + "' AND friend = '" + user.getUname()+  "';");
+                ResultSet r = Runner.query("SELECT friend FROM friends WHERE email = '" + Runner.getUser().getEmail() + "' AND friend = '" + user.getEmail()+  "';");
                 if (r.next()) {
                     System.out.println("Already friends");
                     JOptionPane.showMessageDialog(null, "You are already friends with " + r.getString(1));
                 }
                 else {
                     System.out.println("Added friends");
-                    Runner.update("INSERT INTO friends values('" + Runner.getUser().getEmail() + "', '" + user.getUname()+ "' );");
-                    JOptionPane.showMessageDialog(null, "Added " + r.getString(1) + "!");
+                    Runner.update("INSERT INTO friends values('" + Runner.getUser().getEmail() + "', '" + user.getEmail()+ "' );");
+                    // this throws an exception, the resultsets are super finicky
+//                    JOptionPane.showMessageDialog(null, "Added " + r.getString(1) + "!");
                 }
             } catch (SQLException ex) {
                 System.err.println(ex);

@@ -11,7 +11,6 @@ MySQL [mentality]> show tables;
 | users               |
 | wall                |
 +---------------------+
-8 rows in set (0.046 sec)
 
 MySQL [mentality]> describe exercise;
 +-------------+-------------+------+-----+---------+-------+
@@ -23,16 +22,14 @@ MySQL [mentality]> describe exercise;
 | duration    | int(9)      | YES  |     | NULL    |       |
 | description | text        | YES  |     | NULL    |       |
 +-------------+-------------+------+-----+---------+-------+
-5 rows in set (0.052 sec)
 
 MySQL [mentality]> describe friends;
 +--------+-------------+------+-----+---------+-------+
 | Field  | Type        | Null | Key | Default | Extra |
 +--------+-------------+------+-----+---------+-------+
 | email  | varchar(64) | NO   |     | NULL    |       |
-| friend | varchar(32) | YES  |     | NULL    |       |
+| friend | varchar(64) | NO   |     | NULL    |       |
 +--------+-------------+------+-----+---------+-------+
-2 rows in set (0.046 sec)
 
 MySQL [mentality]> describe journal;
 +---------+-------------+------+-----+---------+-------+
@@ -42,7 +39,6 @@ MySQL [mentality]> describe journal;
 | date    | date        | YES  |     | NULL    |       |
 | journal | text        | YES  |     | NULL    |       |
 +---------+-------------+------+-----+---------+-------+
-3 rows in set (0.049 sec)
 
 MySQL [mentality]> describe mood;
 +--------+---------------+------+-----+---------+-------+
@@ -52,17 +48,15 @@ MySQL [mentality]> describe mood;
 | date   | date          | YES  |     | NULL    |       |
 | scores | decimal(10,0) | YES  |     | NULL    |       |
 +--------+---------------+------+-----+---------+-------+
-3 rows in set (0.046 sec)
 
 MySQL [mentality]> describe people;
 +--------+-------------+------+-----+---------+-------+
 | Field  | Type        | Null | Key | Default | Extra |
 +--------+-------------+------+-----+---------+-------+
-| email  | varchar(64) | YES  |     | NULL    |       |
+| email  | varchar(64) | NO   |     | NULL    |       |
 | date   | date        | YES  |     | NULL    |       |
 | person | varchar(32) | YES  |     | NULL    |       |
 +--------+-------------+------+-----+---------+-------+
-3 rows in set (0.049 sec)
 
 MySQL [mentality]> describe sleep;
 +----------+--------------+------+-----+---------+-------+
@@ -73,7 +67,6 @@ MySQL [mentality]> describe sleep;
 | duration | int(9)       | YES  |     | NULL    |       |
 | quality  | decimal(3,1) | YES  |     | NULL    |       |
 +----------+--------------+------+-----+---------+-------+
-4 rows in set (0.048 sec)
 
 MySQL [mentality]> describe users;
 +-----------+-------------+------+-----+---------+-------+
@@ -86,7 +79,6 @@ MySQL [mentality]> describe users;
 | username  | varchar(32) | YES  |     | NULL    |       |
 | id        | int(11)     | YES  |     | NULL    |       |
 +-----------+-------------+------+-----+---------+-------+
-6 rows in set (0.050 sec)
 
 MySQL [mentality]> describe wall;
 +-----------+-------------+------+-----+---------+-------+
@@ -98,6 +90,5 @@ MySQL [mentality]> describe wall;
 | post      | text        | YES  |     | NULL    |       |
 | mood      | int(11)     | YES  |     | NULL    |       |
 +-----------+-------------+------+-----+---------+-------+
-5 rows in set (0.047 sec)
 
 MySQL [mentality]>

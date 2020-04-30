@@ -1,6 +1,5 @@
 package Mentality.frames;
 
-
 import Mentality.Runner;
 import Mentality.components.User;
 import Mentality.utils.FilterDemo;
@@ -39,46 +38,29 @@ public class Friend extends JDialog {
         add(jp, BorderLayout.NORTH);
 
         try {
-            ResultSet r = Runner.query("SELECT friend FROM friends WHERE email = '" + Runner.getUser().getEmail() + "';");
-            //list contains all of the emails of the user's friends
-            ArrayList <String> userFriends = new ArrayList<>();
-            while (r.next()) {
-                    userFriends.add(r.getString(1));
-            }
-
-
-            r.close();
-
-            for (String userName : userFriends) {
-                //look up friend in users table to display username, email, id, first, and last
-                //if there is time fix this, we are looking up by username but we need to look up by email because only
-                //email is unique. This means we need to include an email field in table friends
-                ResultSet r2 = Runner.query("SELECT * FROM users WHERE username = '" + userName + "';");
-                if (r2.next()) {
-
-                    System.out.println(userName);
-                    System.out.println(r2.getString("username") + " " + r2.getString("email")
-                            + " " + r2.getString("namefirst") + " " + r2.getString("namelast"));
-
-                    User u = new User();
-                    u.setUname(r2.getString("username"));
-                    u.setEmail(r2.getString("email"));
-                    u.setNameFirst(r2.getString("namefirst"));
-                    u.setNameLast(r2.getString("namelast"));
-                    System.out.println("Displaying friends in a table");
-
-                    newContentPane.getModel().addData(u);
-                }
-            }
-            if (r == null) {
+            // look up friend in users table to display username, email, id, first, and last
+            ResultSet r = Runner.query("SELECT DISTINCT username, u.email, namefirst, namelast FROM " +
+                    "users u, friends f WHERE f.email='"+ Runner.getUser().getEmail() + "' AND u.email=f.friend;");
+            if (!r.next()) {
                 System.out.println("User has no friends");
                 JOptionPane.showMessageDialog(null, "Looks like you don't have any friends but I'd love to be yours!");
             }
-        } catch (SQLException ex) {
+            do {
+                System.out.println(r.getString("username") + " " + r.getString("email")
+                        + " " + r.getString("namefirst") + " " + r.getString("namelast"));
+
+                User u = new User();
+                u.setUname(r.getString("username"));
+                u.setEmail(r.getString("email"));
+                u.setNameFirst(r.getString("namefirst"));
+                u.setNameLast(r.getString("namelast"));
+                System.out.println("Displaying friends in a table");
+
+                newContentPane.getModel().addData(u);
+            } while (r.next());
+        } catch (SQLException ex) { // the illegal operation on empty set is OK
             System.err.println(ex);
         }
-
         setVisible(true);
-
     }
 }
