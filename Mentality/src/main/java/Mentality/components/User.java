@@ -4,7 +4,7 @@ public class User {
     private String email, pass, nameFirst, nameLast, uname;
     private int id;
 
-    protected User() {
+    public User() {
         pass = null;
         id = -1;
     }

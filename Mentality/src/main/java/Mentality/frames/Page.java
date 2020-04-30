@@ -127,6 +127,10 @@ public class Page extends JPanel implements ActionListener, FocusListener, KeyLi
 
         if (e.getActionCommand().equals("friends")) {
             System.out.println ("Redirecting to Friends");
+            JDialog friendDialog = new Friend(Runner.getFrame(),"Friend");
+            friendDialog.setSize(new Dimension(600, 600));
+            friendDialog.setLocation (new Point (300, 230));
+            friendDialog.getContentPane().setBackground(mainColor);
         }
         if (e.getActionCommand().equals("diary")) {
             System.out.println ("Redirecting to Diary");
@@ -161,21 +165,19 @@ public class Page extends JPanel implements ActionListener, FocusListener, KeyLi
         if (e.getActionCommand().equals("add")){
             System.out.println ("Adding a Friend");
 
-            //check to see if user is already in database
-            ResultSet rs = Runner.query("SELECT * FROM friends where email = '\" + Runner.getUser().getEmail() + \"' );");
 
             try {
                 System.out.println ( Runner.getUser().getEmail());
-                System.out.println (user.getNameFirst() + " " + user.getNameLast());
+                System.out.println (user.getUname());
 
-                ResultSet r = Runner.query("SELECT friend FROM friends WHERE email = '" + Runner.getUser().getEmail() + "' AND friend = '" + user.getNameFirst() + " " + user.getNameLast() +  "';");
+                ResultSet r = Runner.query("SELECT friend FROM friends WHERE email = '" + Runner.getUser().getEmail() + "' AND friend = '" + user.getUname()+  "';");
                 if (r.next()) {
                     System.out.println("Already friends");
                     JOptionPane.showMessageDialog(null, "You are already friends with " + r.getString(1));
                 }
                 else {
                     System.out.println("Added friends");
-                    Runner.update("INSERT INTO friends values('" + Runner.getUser().getEmail() + "', '" + user.getNameFirst() + " " + user.getNameLast() + "' );");
+                    Runner.update("INSERT INTO friends values('" + Runner.getUser().getEmail() + "', '" + user.getUname()+ "' );");
                     JOptionPane.showMessageDialog(null, "Added " + r.getString(1) + "!");
                 }
             } catch (SQLException ex) {
