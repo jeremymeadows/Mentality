@@ -118,6 +118,7 @@ public class ReportMaker {
 
 
     public void generateReport()  {
+
         System.out.println("In generate report");
         generateExerciseData();
         generateSleepData();

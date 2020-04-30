@@ -15,7 +15,7 @@ import java.awt.event.*;
 import java.util.Date;
 
 
-public class Dashboard extends JPanel implements ActionListener, FocusListener, KeyListener {
+public class Dashboard extends JPanel implements ActionListener {
     private static final int BUTTONNUM = 5;
 
     public Dashboard() {
@@ -144,15 +144,4 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
         }
     }
 
-    @Override
-    public void focusGained(FocusEvent e) {}
-    @Override
-    public void focusLost(FocusEvent e) {}
-
-    @Override
-    public void keyPressed(KeyEvent e) {}
-    @Override
-    public void keyReleased(KeyEvent e) {}
-    @Override
-    public void keyTyped(KeyEvent e) {}
 }

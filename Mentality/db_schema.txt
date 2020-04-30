@@ -41,13 +41,15 @@ MySQL [mentality]> describe journal;
 +---------+-------------+------+-----+---------+-------+
 
 MySQL [mentality]> describe mood;
-+--------+---------------+------+-----+---------+-------+
-| Field  | Type          | Null | Key | Default | Extra |
-+--------+---------------+------+-----+---------+-------+
-| email  | varchar(64)   | NO   |     | NULL    |       |
-| date   | date          | YES  |     | NULL    |       |
-| scores | decimal(10,0) | YES  |     | NULL    |       |
-+--------+---------------+------+-----+---------+-------+
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| email     | varchar(64) | NO   |     | NULL    |       |
+| date      | date        | YES  |     | NULL    |       |
+| happiness | int(9)      | YES  |     | NULL    |       |
+| sadness   | int(9)      | YES  |     | NULL    |       |
+| stress    | int(9)      | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
 
 MySQL [mentality]> describe people;
 +--------+-------------+------+-----+---------+-------+

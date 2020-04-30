@@ -126,30 +126,17 @@ public class MoodSurvey extends JDialog implements ActionListener {
         }
         if (e.getActionCommand().equals("submit")){
             System.out.println("Submitting survey");
-            // this is the format from which MySQL can read dates
-            String dateStr = String.format("\"%s-%02d-%02d\"", calendar.selected[2],
-                    Integer.parseInt(calendar.selected[1]), Integer.parseInt(calendar.selected[0]));
 
-            for (Map.Entry<Object, Object> q : BadDataStorage.data.entrySet()) {
-                Runner.update(q.getValue().toString().replaceAll("\\$DATE", dateStr));
-            }
-            BadDataStorage.data = new HashMap<>();
+//            // this is the format from which MySQL can read dates
+//            String dateStr = String.format("\"%s-%02d-%02d\"", calendar.selected[2],
+//                    Integer.parseInt(calendar.selected[1]), Integer.parseInt(calendar.selected[0]));
+//
+//            for (Map.Entry<Object, Object> q : BadDataStorage.data.entrySet()) {
+//                Runner.update(q.getValue().toString().replaceAll("\\$DATE", dateStr));
+//            }
+//            BadDataStorage.data = new HashMap<>();
             this.dispose();
         }
     }
 
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//        if (e.getActionCommand().equals("complete")) {
-//            Object u = users.elementAt(peopleList.getSelectedIndex());
-//            String q = ("INSERT INTO people values(" +
-//                    "\"" + Runner.getUser().getEmail() + "\", " +
-//                    "$DATE, " +
-//                    "\"" + (u.equals("--") ? name.getText() : u) + "\");"
-//            );
-//            BadDataStorage.data.put("person", q);
-//            System.out.println("People survey completed");
-//            this.dispose();
-//        }
-//    }
 }
