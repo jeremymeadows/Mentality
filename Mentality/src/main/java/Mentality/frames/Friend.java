@@ -29,10 +29,13 @@ public class Friend extends JDialog {
         JScrollPane pane = new JScrollPane(newContentPane);
         add(pane, BorderLayout.CENTER);
 
+        add(new JLabel("Filter friends in the box below and double click a friend to go to his/her profile!"), CENTER_ALIGNMENT);
+
         //filter table
         JTextField filterField = FilterDemo.createRowFilter(newContentPane.getTable());
         JPanel jp = new JPanel();
         jp.add(filterField);
+        jp.setBackground(mainColor);
         add(jp, BorderLayout.NORTH);
 
         try {
@@ -65,7 +68,6 @@ public class Friend extends JDialog {
                     System.out.println("Displaying friends in a table");
 
                     newContentPane.getModel().addData(u);
-//                    userVector.add(u);
                 }
             }
             if (r == null) {

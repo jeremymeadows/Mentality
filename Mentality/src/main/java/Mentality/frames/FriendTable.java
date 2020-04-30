@@ -1,11 +1,16 @@
 package Mentality.frames;
 
+import Mentality.Runner;
 import Mentality.components.MyTableModel;
 import Mentality.components.User;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Vector;
 
 public class FriendTable extends JPanel{
@@ -46,6 +51,28 @@ public class FriendTable extends JPanel{
 
         //Add the scroll pane to this panel.
         add(scrollPane);
+
+        //redirect to user's page if double clicked
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+                try {
+                    ResultSet r = Runner.query("SELECT * FROM users WHERE email = '" + table.getValueAt(table.getSelectedRow(), 3).toString() + "';");
+                    User u = new User();
+                    while (r.next()) {
+                        u.setUname(r.getString("username"));
+                        u.setEmail(r.getString("email"));
+                        u.setId(r.getInt("id"));
+                        u.setNameFirst(r.getString("namefirst"));
+                        u.setNameLast(r.getString("namelast"));
+                    }
+                    Runner.getRunnerInstance().changeFrame(new Page(u));
+                } catch (SQLException ex) {
+                    System.err.println(ex);
+                }
+                System.out.println("row selected" + table.getValueAt(table.getSelectedRow(), 3).toString());
+            }
+        });
+
 
     }
     public MyTableModel getModel(){return tableModel;}

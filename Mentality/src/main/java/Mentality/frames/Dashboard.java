@@ -110,7 +110,7 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
         if (e.getActionCommand().equals("friends")) {
             System.out.println ("Redirecting to Friends");
             JDialog friendDialog = new Friend(Runner.getFrame(),"Friend");
-            friendDialog.setSize(new Dimension(600, 600));
+            friendDialog.setSize(new Dimension(600, 400));
             friendDialog.setLocation (new Point (300, 230));
             friendDialog.getContentPane().setBackground(mainColor);
 
