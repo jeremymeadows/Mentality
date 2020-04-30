@@ -9,8 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.Format;
-import java.util.Formatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -110,19 +108,19 @@ public class MoodSurvey extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("people")){
             System.out.println("Redirecting to the people survey");
-            JDialog MainFrame = new Person(Runner.getFrame(),"Survey");
+            JDialog MainFrame = new PersonSurvey(Runner.getFrame(),"Survey");
             MainFrame.setLocation (new Point (300, 230));
             MainFrame.getContentPane().setBackground(mainColor);
         }
         if (e.getActionCommand().equals("sleep")){
             System.out.println("Redirecting to the sleep survey");
-            JDialog MainFrame = new Sleep(Runner.getFrame(),"Survey");
+            JDialog MainFrame = new SleepSurvey(Runner.getFrame(),"Survey");
             MainFrame.setLocation (new Point (300, 230));
             MainFrame.getContentPane().setBackground(mainColor);
         }
         if (e.getActionCommand().equals("exercise")){
             System.out.println("Redirecting to the exercise survey");
-            JDialog MainFrame = new Exercise(Runner.getFrame(),"Survey");
+            JDialog MainFrame = new ExerciseSurvey(Runner.getFrame(),"Survey");
             MainFrame.setLocation (new Point (300, 230));
             MainFrame.getContentPane().setBackground(mainColor);
         }
@@ -139,4 +137,19 @@ public class MoodSurvey extends JDialog implements ActionListener {
             this.dispose();
         }
     }
+
+//    @Override
+//    public void actionPerformed(ActionEvent e) {
+//        if (e.getActionCommand().equals("complete")) {
+//            Object u = users.elementAt(peopleList.getSelectedIndex());
+//            String q = ("INSERT INTO people values(" +
+//                    "\"" + Runner.getUser().getEmail() + "\", " +
+//                    "$DATE, " +
+//                    "\"" + (u.equals("--") ? name.getText() : u) + "\");"
+//            );
+//            BadDataStorage.data.put("person", q);
+//            System.out.println("People survey completed");
+//            this.dispose();
+//        }
+//    }
 }

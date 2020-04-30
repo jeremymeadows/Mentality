@@ -1,20 +1,15 @@
 package Mentality.frames;
 
-import Mentality.components.Chart;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static Mentality.utils.CustomUtilities.ColorPalette.mainColor;
-import static Mentality.utils.CustomUtilities.center;
-
 /**********************************
  * singleton design pattern
  **********************************/
 
-public class Report extends JDialog {
+public class ReportSurvey extends JDialog {
     //default dummy values
     Double avgHappiness = 8.2;
     String bestActivity = "Software Engineering";
@@ -27,7 +22,7 @@ public class Report extends JDialog {
     private static final long serialVersionUID = 2L;
     JPanel topPanel;
 
-    public Report(JFrame parent, String title) {
+    public ReportSurvey(JFrame parent, String title) {
         super(parent, title);
 
         //panel to hold all panels
@@ -59,7 +54,7 @@ public class Report extends JDialog {
         gc.weighty = 1;
         add(topPanel, gc);
         // set action listener on the button
-        button.addActionListener(new Report.MyActionListener());
+        button.addActionListener(new ReportSurvey.MyActionListener());
         gc.gridx = 0;
         gc.gridy = 1;
         gc.weightx = .5;

@@ -1,10 +1,6 @@
 package Mentality.DomainLayer;
 
-import Mentality.DomainLayer.ExerciseObj;
 import Mentality.Runner;
-import Mentality.components.User;
-import Mentality.frames.Exercise;
-import Mentality.DomainLayer.ReportObj;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -75,6 +71,15 @@ public class ReportMaker {
 
             rs.close();
 
+            ResultSet r2 = Runner.query("SELECT * FROM people");
+
+            while(r2.next()) {
+                PersonObj personObj = new PersonObj();
+                personObj.setName(r2.getString("person"));
+                System.out.println(personObj.getName() + " " + r2.getString("date"));
+            }
+            r2.close();
+
         }catch (SQLException ex){
             System.err.println(ex);
         }
@@ -95,6 +100,15 @@ public class ReportMaker {
             }
 
             rs.close();
+
+            ResultSet r2 = Runner.query("SELECT * FROM mood");
+
+            System.out.println(("All the moods"));
+            while(r2.next()) {
+                System.out.println("score: " + r2.getString("scores"));
+                System.out.println("date: " + r2.getString("date"));
+
+            }
 
         }catch (SQLException ex){
             System.err.println(ex);

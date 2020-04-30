@@ -1,7 +1,5 @@
 package Mentality.DomainLayer;
 
-import Mentality.frames.Exercise;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -126,7 +126,7 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
         if (e.getActionCommand().equals("report")) {
             System.out.println ("Opening Report");
 
-            JDialog reportDialogue = new Report(Runner.getFrame(),"Report");
+            JDialog reportDialogue = new ReportSurvey(Runner.getFrame(),"Report");
             reportDialogue.setSize(new Dimension(600, 600));
             reportDialogue.setLocation (new Point (300, 230));
             reportDialogue.getContentPane().setBackground(mainColor);

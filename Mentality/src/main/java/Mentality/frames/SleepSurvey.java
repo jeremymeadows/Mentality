@@ -17,12 +17,12 @@ import static Mentality.utils.CustomUtilities.initJButton;
  **********************************/
 
 
-public class Sleep extends JDialog implements ActionListener {
+public class SleepSurvey extends JDialog implements ActionListener {
     int energy;
     JComboBox hoursList;
     String[] hours = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10+" };
 
-    public Sleep (JFrame parent, String title){
+    public SleepSurvey(JFrame parent, String title){
         super(parent, title);
         setLayout (new GridLayout(0, 1));
         setBackground(mainColor);

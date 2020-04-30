@@ -141,7 +141,7 @@ public class Page extends JPanel implements ActionListener, FocusListener, KeyLi
         if (e.getActionCommand().equals("report")) {
             System.out.println ("Opening Report");
 
-            JDialog reportDialogue = new Report(Runner.getFrame(),"Report");
+            JDialog reportDialogue = new ReportSurvey(Runner.getFrame(),"Report");
             reportDialogue.setSize(new Dimension(600, 600));
             reportDialogue.setLocation (new Point (300, 230));
             reportDialogue.getContentPane().setBackground(mainColor);
@@ -178,7 +178,7 @@ public class Page extends JPanel implements ActionListener, FocusListener, KeyLi
                     System.out.println("Added friends");
                     Runner.update("INSERT INTO friends values('" + Runner.getUser().getEmail() + "', '" + user.getEmail()+ "' );");
                     // this throws an exception, the resultsets are super finicky
-//                    JOptionPane.showMessageDialog(null, "Added " + r.getString(1) + "!");
+                    JOptionPane.showMessageDialog(null, "Added " + r.getString(1) + "!");
                 }
             } catch (SQLException ex) {
                 System.err.println(ex);

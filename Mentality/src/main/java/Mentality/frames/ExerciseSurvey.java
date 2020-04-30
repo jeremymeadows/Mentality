@@ -22,7 +22,7 @@ import static Mentality.utils.CustomUtilities.initJButton;
  * singleton design pattern
  **********************************/
 
-public class Exercise extends JDialog implements ActionListener {
+public class ExerciseSurvey extends JDialog implements ActionListener {
 
     String description;
     JComboBox workoutList, durationList;
@@ -45,7 +45,7 @@ public class Exercise extends JDialog implements ActionListener {
             put("2 hr+", 120);
     }};
 
-    public Exercise (JFrame parent, String title){
+    public ExerciseSurvey(JFrame parent, String title){
         super(parent, title);
         setLayout (new GridLayout(0, 1));
         setBackground(mainColor);
