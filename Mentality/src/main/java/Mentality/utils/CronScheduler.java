@@ -1,11 +1,12 @@
 package Mentality.utils;
 
+import Mentality.DomainLayer.ReportMaker;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.Date;
 
 public class CronScheduler {
-    ReportMaker reportMaker = new ReportMaker();
+    ReportMaker reportMaker;
     Date date;
 
     //change to update surveys every minute
@@ -14,6 +15,7 @@ public class CronScheduler {
     @Scheduled(cron = "*/20 * * * * *")
     public void run () throws InterruptedException{
         date = new Date();
+        reportMaker = new ReportMaker();
         reportMaker.generateReport();
         System.out.println("Cron scheduler is running at " + date);
         Thread.sleep(10000);

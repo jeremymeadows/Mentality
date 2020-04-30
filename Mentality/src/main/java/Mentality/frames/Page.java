@@ -5,7 +5,6 @@ import Mentality.components.Feed;
 import Mentality.components.PostToWall;
 import Mentality.components.Search;
 import Mentality.components.User;
-import Mentality.utils.BadDataStorage;
 import Mentality.utils.CronScheduler;
 
 import javax.swing.*;
@@ -119,7 +118,7 @@ public class Page extends JPanel implements ActionListener, FocusListener, KeyLi
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("survey")) {
             System.out.println ("Redirecting to Mood Survey");
-            JDialog MainFrame = new Mood(Runner.getFrame(),"Survey");
+            JDialog MainFrame = new MoodSurvey(Runner.getFrame(),"Survey");
             MainFrame.setSize(new Dimension(600, 600));
             MainFrame.setLocation (new Point (300, 230));
             MainFrame.getContentPane().setBackground(mainColor);
