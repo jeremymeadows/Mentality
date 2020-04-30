@@ -75,7 +75,18 @@ public class ReportSurvey extends JDialog {
         text = new JTextField ("Average stress:");
         text.setEditable(false);
         labelPanel.add(text);
-
+        text = new JTextField ("Best workout(s):");
+        text.setEditable(false);
+        labelPanel.add(text);
+        text = new JTextField ("Best workout(s) produced mood of:");
+        text.setEditable(false);
+        labelPanel.add(text);
+        text = new JTextField ("Worst workout(s):");
+        text.setEditable(false);
+        labelPanel.add(text);
+        text = new JTextField ("Worst workout(s) produced mood of:");
+        text.setEditable(false);
+        labelPanel.add(text);
 
         topPanel.add(labelPanel);
     }
@@ -99,6 +110,22 @@ public class ReportSurvey extends JDialog {
         resultsPanel.add(text);
 
         text = new JTextField ((String.valueOf(reportObj.getAverageStress())));
+        text.setEditable(false);
+        resultsPanel.add(text);
+
+        text = new JTextField ((String.valueOf(reportObj.getBestWorkout())));
+        text.setEditable(false);
+        resultsPanel.add(text);
+
+        text = new JTextField ((String.valueOf(reportObj.getWorkoutBestMood())));
+        text.setEditable(false);
+        resultsPanel.add(text);
+
+        text = new JTextField ((String.valueOf(reportObj.getWorstWorkout())));
+        text.setEditable(false);
+        resultsPanel.add(text);
+
+        text = new JTextField ((String.valueOf(reportObj.getWorkoutWorstMood())));
         text.setEditable(false);
         resultsPanel.add(text);
 

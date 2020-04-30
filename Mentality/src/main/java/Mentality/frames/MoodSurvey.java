@@ -133,7 +133,15 @@ public class MoodSurvey extends JDialog implements ActionListener {
 
 
             for (Map.Entry<Object, Object> q : BadDataStorage.data.entrySet()) {
-                Runner.update(q.getValue().toString().replaceAll("\\$DATE", dateStr));
+                //append the mood information to each survey table
+                String full = q.getValue().toString();
+                full = full.substring(0, full.length() - 2);
+                full = full + ", " + happiness + ", " + sadness + ", " + stress  + ");";
+               System.out.println("full value: " + full);
+                Runner.update(full.replaceAll("\\$DATE", dateStr));
+
+
+
             }
             //insert into mood table as well
             String sql = ("INSERT INTO mood VALUES(" +

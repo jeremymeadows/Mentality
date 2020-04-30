@@ -8,7 +8,11 @@ public class ExerciseObj {
 
     String activity, description;
     int duration;
+    protected MoodObj mood = new MoodObj();
 
+    public MoodObj getMood() {
+        return mood;
+    }
 
     public String getActivity() {
         return activity;

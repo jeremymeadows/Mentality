@@ -4,6 +4,11 @@ public class SleepObj {
 
     protected int duration;
     protected double quality;
+    protected MoodObj mood = new MoodObj();
+
+    public MoodObj getMood() {
+        return mood;
+    }
 
     public int getDuration() {
         return duration;

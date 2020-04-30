@@ -45,8 +45,14 @@ public class ReportMaker {
                 exerciseObj.setActivity(rs.getString("activity"));
                 exerciseObj.setDuration(Integer.parseInt(rs.getString("duration")));
                 exerciseObj.setDescription(rs.getString("description"));
+                try {
+                    exerciseObj.mood.setHappiness(Integer.parseInt(rs.getString("happiness")));
+                    exerciseObj.mood.setSadness(Integer.parseInt(rs.getString("sadness")));
+                    exerciseObj.mood.setStress(Integer.parseInt(rs.getString("stress")));
+                }catch (NumberFormatException e){System.err.println(e);}
+
                 report.exerciseObjs.add(exerciseObj);
-                System.out.println(exerciseObj.getActivity() + " " + exerciseObj.getDuration() + " " + exerciseObj.getDescription());
+//                System.out.println(exerciseObj.getActivity() + " " + exerciseObj.getDuration() + " " + exerciseObj.getDescription());
             }
 
             rs.close();
@@ -67,8 +73,14 @@ public class ReportMaker {
                 SleepObj sleepObj = new SleepObj();
                 sleepObj.setDuration(Integer.parseInt(rs.getString("duration")));
                 sleepObj.setQuality(Double.parseDouble(rs.getString("quality")));
+                try {
+                    sleepObj.mood.setHappiness(Integer.parseInt(rs.getString("happiness")));
+                    sleepObj.mood.setSadness(Integer.parseInt(rs.getString("sadness")));
+                    sleepObj.mood.setStress(Integer.parseInt(rs.getString("stress")));
+                }catch (NumberFormatException e) {System.err.println(e);}
+
                 report.sleepObjs.add(sleepObj);
-                System.out.println(sleepObj.getDuration() + " " + sleepObj.getQuality());
+//                System.out.println(sleepObj.getDuration() + " " + sleepObj.getQuality());
             }
 
             rs.close();
@@ -88,20 +100,17 @@ public class ReportMaker {
             while(rs.next()) {
                 PersonObj personObj = new PersonObj();
                 personObj.setName(rs.getString("person"));
+                try {
+                    personObj.mood.setHappiness(Integer.parseInt(rs.getString("happiness")));
+                    personObj.mood.setSadness(Integer.parseInt(rs.getString("sadness")));
+                    personObj.mood.setStress(Integer.parseInt(rs.getString("stress")));
+                }catch (NumberFormatException e){System.err.println(e);}
+
                 report.personObjs.add(personObj);
-                System.out.println(personObj.getName());
+//                System.out.println(personObj.getName());
             }
 
             rs.close();
-
-            ResultSet r2 = Runner.query("SELECT * FROM people");
-
-            while(r2.next()) {
-                PersonObj personObj = new PersonObj();
-                personObj.setName(r2.getString("person"));
-                System.out.println(personObj.getName() + " " + r2.getString("date"));
-            }
-            r2.close();
 
         }catch (SQLException ex){
             System.err.println(ex);
@@ -121,7 +130,7 @@ public class ReportMaker {
                 moodObj.setSadness(Integer.parseInt(rs.getString("sadness")));
                 moodObj.setStress(Integer.parseInt(rs.getString("stress")));
                 report.moodObjs.add(moodObj);
-                System.out.println(moodObj.getHappiness() + " " + moodObj.getSadness() + " " + moodObj.getStress());
+//                System.out.println(moodObj.getHappiness() + " " + moodObj.getSadness() + " " + moodObj.getStress());
             }
 
             rs.close();

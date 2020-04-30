@@ -21,6 +21,9 @@ MySQL [mentality]> describe exercise;
 | activity    | varchar(32) | YES  |     | NULL    |       |
 | duration    | int(9)      | YES  |     | NULL    |       |
 | description | text        | YES  |     | NULL    |       |
+| happiness   | int(9)      | YES  |     | NULL    |       |
+| sadness     | int(9)      | YES  |     | NULL    |       |
+| stress      | int(9)      | YES  |     | NULL    |       |
 +-------------+-------------+------+-----+---------+-------+
 
 MySQL [mentality]> describe friends;
@@ -52,23 +55,31 @@ MySQL [mentality]> describe mood;
 +-----------+-------------+------+-----+---------+-------+
 
 MySQL [mentality]> describe people;
-+--------+-------------+------+-----+---------+-------+
-| Field  | Type        | Null | Key | Default | Extra |
-+--------+-------------+------+-----+---------+-------+
-| email  | varchar(64) | NO   |     | NULL    |       |
-| date   | date        | YES  |     | NULL    |       |
-| person | varchar(32) | YES  |     | NULL    |       |
-+--------+-------------+------+-----+---------+-------+
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| email     | varchar(64) | NO   |     | NULL    |       |
+| date      | date        | YES  |     | NULL    |       |
+| person    | varchar(32) | YES  |     | NULL    |       |
+| happiness | int(9)      | YES  |     | NULL    |       |
+| sadness   | int(9)      | YES  |     | NULL    |       |
+| stress    | int(9)      | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+
 
 MySQL [mentality]> describe sleep;
-+----------+--------------+------+-----+---------+-------+
-| Field    | Type         | Null | Key | Default | Extra |
-+----------+--------------+------+-----+---------+-------+
-| email    | varchar(64)  | NO   |     | NULL    |       |
-| date     | date         | YES  |     | NULL    |       |
-| duration | int(9)       | YES  |     | NULL    |       |
-| quality  | decimal(3,1) | YES  |     | NULL    |       |
-+----------+--------------+------+-----+---------+-------+
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| email     | varchar(64)  | NO   |     | NULL    |       |
+| date      | date         | YES  |     | NULL    |       |
+| duration  | int(9)       | YES  |     | NULL    |       |
+| quality   | decimal(3,1) | YES  |     | NULL    |       |
+| happiness | int(9)       | YES  |     | NULL    |       |
+| sadness   | int(9)       | YES  |     | NULL    |       |
+| stress    | int(9)       | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+
 
 MySQL [mentality]> describe users;
 +-----------+-------------+------+-----+---------+-------+
