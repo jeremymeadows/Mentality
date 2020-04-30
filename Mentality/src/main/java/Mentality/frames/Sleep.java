@@ -12,6 +12,11 @@ import java.awt.event.ActionListener;
 import static Mentality.utils.CustomUtilities.ColorPalette.mainColor;
 import static Mentality.utils.CustomUtilities.initJButton;
 
+/**********************************
+ * singleton design pattern
+ **********************************/
+
+
 public class Sleep extends JDialog implements ActionListener {
     int energy;
     JComboBox hoursList;

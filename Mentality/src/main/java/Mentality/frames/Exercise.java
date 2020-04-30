@@ -18,6 +18,10 @@ import java.util.Vector;
 import static Mentality.utils.CustomUtilities.ColorPalette.mainColor;
 import static Mentality.utils.CustomUtilities.initJButton;
 
+/**********************************
+ * singleton design pattern
+ **********************************/
+
 public class Exercise extends JDialog implements ActionListener {
 
     String description;
