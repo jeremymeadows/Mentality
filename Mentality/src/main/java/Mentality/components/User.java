@@ -11,7 +11,7 @@ public class User {
     public User(String email, String pass) {
         this.email = email;
         this.pass = pass;
-        id = pass.hashCode();
+        id = pass.hashCode() % 1000000000; // making a 9-digit int gets rid of weird Java->MySQL sign issue
     }
     public User(String email, String pass, String nameFirst, String nameLast, String uname) {
         this(email, pass);

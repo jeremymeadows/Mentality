@@ -1,10 +1,16 @@
 package Mentality.components;
 
+import Mentality.Runner;
+import Mentality.frames.Page;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Date;
 
-public class Post extends JPanel{
+public class Post extends JPanel {
+    private String email;
     String name;
     Date date_posted;
     String post;
@@ -25,6 +31,14 @@ public class Post extends JPanel{
         this.mood = mood;
 
         labelName = new JLabel(name);
+        labelName.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("clicked username");
+                User u = new User(email, null, null, null, name);
+                Runner.getRunnerInstance().changeFrame(new Page(u));
+            }
+        });
         dateLabel = new JLabel(date_posted.toString());
         postMessage = new JTextArea(post, 4, 80);
         postMessage.setEditable(false);
@@ -62,8 +76,26 @@ public class Post extends JPanel{
         add(starRater, gc);
     }
 
-    void setUserame(String name) {
+    void setEmail(String email) {
+        this.email = email;
+    }
+    void setUsername(String name) {
         this.name = name;
         labelName = new JLabel(name);
+        if (email.equals(Runner.getUser().getEmail())) {
+            labelName.setOpaque(true);
+            labelName.setBackground(Color.YELLOW);
+        } else {
+            labelName.setForeground(Color.BLUE);
+        }
+        labelName.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (!email.equals(Runner.getUser().getEmail())) {
+                    User u = new User(email, "-", null, null, name);
+                    Runner.getRunnerInstance().changeFrame(new Page(u));
+                }
+            }
+        });
     }
 }

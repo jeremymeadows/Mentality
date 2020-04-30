@@ -5,7 +5,6 @@ import Mentality.components.Feed;
 import Mentality.components.PostToWall;
 import Mentality.components.Search;
 import Mentality.components.User;
-import Mentality.utils.BadDataStorage;
 import Mentality.utils.CronScheduler;
 
 import javax.swing.*;
@@ -105,8 +104,6 @@ public class Page extends JPanel implements ActionListener, FocusListener, KeyLi
         addFriendButton.setLocation(new Point (0, 20));
         addFriendButton.setActionCommand("add");
         addFriendButton.addActionListener(this);
-
-
 
         add(redirectPanel);
         add(postPanel);
