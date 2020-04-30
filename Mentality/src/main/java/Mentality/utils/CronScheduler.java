@@ -23,7 +23,7 @@ public class CronScheduler {
     }
 
     //update report every 20 seconds
-    @Scheduled(cron = "*/10 * * * * *")
+    @Scheduled(cron = "*/7 * * * * *")
     public void run () throws InterruptedException{
         date = new Date();
         reportMaker.setReport(new ReportObj());
@@ -39,6 +39,8 @@ public class CronScheduler {
         reportMaker.getReportObj().workoutInfo();
         reportMaker.getReportObj().averageSleep();
         reportMaker.getReportObj().personInfo();
+        reportMaker.generateHappinessGraph();
+
         return reportMaker.getReportObj();
 
     }

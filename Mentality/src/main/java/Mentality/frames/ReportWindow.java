@@ -11,11 +11,11 @@ import java.awt.event.ActionListener;
  * singleton design pattern
  **********************************/
 
-public class ReportSurvey extends JDialog {
+public class ReportWindow extends JDialog {
     JPanel topPanel;
     ReportObj reportObj;
 
-    public ReportSurvey(JFrame parent, String title, ReportObj reportObj) {
+    public ReportWindow(JFrame parent, String title, ReportObj reportObj) {
         super(parent, title);
         this.reportObj = reportObj;
 
@@ -48,7 +48,7 @@ public class ReportSurvey extends JDialog {
         gc.weighty = 1;
         add(topPanel, gc);
         // set action listener on the button
-        button.addActionListener(new ReportSurvey.MyActionListener());
+        button.addActionListener(new ReportWindow.MyActionListener());
         gc.gridx = 0;
         gc.gridy = 1;
         gc.weightx = .5;
@@ -78,25 +78,25 @@ public class ReportSurvey extends JDialog {
         text = new JTextField ("Best workout(s):");
         text.setEditable(false);
         labelPanel.add(text);
-        text = new JTextField ("Best workout(s) produced mood of:");
+        text = new JTextField ("Best workout(s) mood of:");
         text.setEditable(false);
         labelPanel.add(text);
         text = new JTextField ("Worst workout(s):");
         text.setEditable(false);
         labelPanel.add(text);
-        text = new JTextField ("Worst workout(s) produced mood of:");
+        text = new JTextField ("Worst workout(s) mood:");
         text.setEditable(false);
         labelPanel.add(text);
         text = new JTextField ("Best person(s):");
         text.setEditable(false);
         labelPanel.add(text);
-        text = new JTextField ("Best person(s) produced mood of:");
+        text = new JTextField ("Best person(s) mood:");
         text.setEditable(false);
         labelPanel.add(text);
         text = new JTextField ("Worst person(s):");
         text.setEditable(false);
         labelPanel.add(text);
-        text = new JTextField ("Worst person(s) produced mood of:");
+        text = new JTextField ("Worst person(s) mood:");
         text.setEditable(false);
         labelPanel.add(text);
         text = new JTextField ("Average sleep duration:");

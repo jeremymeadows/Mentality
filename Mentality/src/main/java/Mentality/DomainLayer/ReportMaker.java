@@ -1,10 +1,13 @@
 package Mentality.DomainLayer;
 
 import Mentality.Runner;
+import Mentality.components.Chart;
 import Mentality.utils.CronScheduler;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import static java.lang.Integer.parseInt;
 
 public class ReportMaker {
     ReportObj report;
@@ -43,12 +46,12 @@ public class ReportMaker {
             while(rs.next()) {
                 ExerciseObj exerciseObj = new ExerciseObj();
                 exerciseObj.setActivity(rs.getString("activity"));
-                exerciseObj.setDuration(Integer.parseInt(rs.getString("duration")));
+                exerciseObj.setDuration(parseInt(rs.getString("duration")));
                 exerciseObj.setDescription(rs.getString("description"));
                 try {
-                    exerciseObj.mood.setHappiness(Integer.parseInt(rs.getString("happiness")));
-                    exerciseObj.mood.setSadness(Integer.parseInt(rs.getString("sadness")));
-                    exerciseObj.mood.setStress(Integer.parseInt(rs.getString("stress")));
+                    exerciseObj.mood.setHappiness(parseInt(rs.getString("happiness")));
+                    exerciseObj.mood.setSadness(parseInt(rs.getString("sadness")));
+                    exerciseObj.mood.setStress(parseInt(rs.getString("stress")));
                 }catch (NumberFormatException e){System.err.println(e);}
 
                 report.exerciseObjs.add(exerciseObj);
@@ -71,12 +74,12 @@ public class ReportMaker {
 
             while(rs.next()) {
                 SleepObj sleepObj = new SleepObj();
-                sleepObj.setDuration(Integer.parseInt(rs.getString("duration")));
+                sleepObj.setDuration(parseInt(rs.getString("duration")));
                 sleepObj.setQuality(Double.parseDouble(rs.getString("quality")));
                 try {
-                    sleepObj.mood.setHappiness(Integer.parseInt(rs.getString("happiness")));
-                    sleepObj.mood.setSadness(Integer.parseInt(rs.getString("sadness")));
-                    sleepObj.mood.setStress(Integer.parseInt(rs.getString("stress")));
+                    sleepObj.mood.setHappiness(parseInt(rs.getString("happiness")));
+                    sleepObj.mood.setSadness(parseInt(rs.getString("sadness")));
+                    sleepObj.mood.setStress(parseInt(rs.getString("stress")));
                 }catch (NumberFormatException e) {System.err.println(e);}
 
                 report.sleepObjs.add(sleepObj);
@@ -101,9 +104,9 @@ public class ReportMaker {
                 PersonObj personObj = new PersonObj();
                 personObj.setName(rs.getString("person"));
                 try {
-                    personObj.mood.setHappiness(Integer.parseInt(rs.getString("happiness")));
-                    personObj.mood.setSadness(Integer.parseInt(rs.getString("sadness")));
-                    personObj.mood.setStress(Integer.parseInt(rs.getString("stress")));
+                    personObj.mood.setHappiness(parseInt(rs.getString("happiness")));
+                    personObj.mood.setSadness(parseInt(rs.getString("sadness")));
+                    personObj.mood.setStress(parseInt(rs.getString("stress")));
                 }catch (NumberFormatException e){System.err.println(e);}
 
                 report.personObjs.add(personObj);
@@ -124,11 +127,13 @@ public class ReportMaker {
             ResultSet rs = Runner.query("SELECT * FROM mood WHERE email = '" + Runner.getUser().getEmail() +  "'" +
                     "AND date >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY");
 
+            int i = 0;
+
             while(rs.next()) {
                 MoodObj moodObj = new MoodObj();
-                moodObj.setHappiness(Integer.parseInt(rs.getString("happiness")));
-                moodObj.setSadness(Integer.parseInt(rs.getString("sadness")));
-                moodObj.setStress(Integer.parseInt(rs.getString("stress")));
+                moodObj.setHappiness(parseInt(rs.getString("happiness")));
+                moodObj.setSadness(parseInt(rs.getString("sadness")));
+                moodObj.setStress(parseInt(rs.getString("stress")));
                 report.moodObjs.add(moodObj);
 //                System.out.println(moodObj.getHappiness() + " " + moodObj.getSadness() + " " + moodObj.getStress());
             }
@@ -139,6 +144,36 @@ public class ReportMaker {
             System.err.println(ex);
         }
     }
+
+    public void generateHappinessGraph(){
+        System.out.println("generating happiness graph data");
+        try {
+//            get data from past 7 days from database
+            ResultSet rs = Runner.query("SELECT happiness FROM mood WHERE email = '" + Runner.getUser().getEmail() +  "'" +
+                    "AND date >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY LIMIT 7");
+
+            double data [] = new double[7];
+            for (int i = 0; i < 7; i++)
+                data[i] = 0;
+
+            int i = 6;
+            while(rs.next()) {
+                data[i] = parseInt(rs.getString(1));
+                System.out.println ("data[i] " + data[i]);
+                i--;
+            }
+            //set the values for the happiness graph
+            Chart chart = Chart.getInstance();
+            chart.setHappiness(data);
+
+
+            rs.close();
+
+        }catch (SQLException ex){
+            System.err.println(ex);
+        }
+    }
+
 
 
     public void generateReport()  {

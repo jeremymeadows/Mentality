@@ -1,4 +1,5 @@
 package Mentality.components;
+import Mentality.utils.CronScheduler;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -15,7 +16,34 @@ public class Chart {
 
     ChartPanel chartPanel;
 
-    public Chart(){
+    double [] hapinesslevels = new double [7];
+
+    // static variable single_instance of type Singleton
+    private static Chart single_instance = null;
+
+    // static method to create instance of Singleton class
+    public static Chart getInstance()
+    {
+        if (single_instance == null)
+            single_instance = new Chart();
+
+        return single_instance;
+    }
+
+    public void setHappiness (double [] data){
+        this.hapinesslevels = data;
+        for (double i : hapinesslevels)
+            System.out.print("HL:" +  i);
+    }
+
+    public Chart() {
+
+        double data[] = new double[7];
+        for (int i = 0; i < 7; i++)
+            data[i] = 0;
+    }
+    public void run(){
+
         XYDataset ds = createDataset();
         JFreeChart chart = ChartFactory.createXYLineChart("User's Mood",
                 "Days", "Happiness", ds, PlotOrientation.VERTICAL, true, true,
@@ -37,11 +65,9 @@ public class Chart {
         return chartPanel;
     }
 
-    private static XYDataset createDataset() {
-
+    private XYDataset createDataset() {
         DefaultXYDataset ds = new DefaultXYDataset();
-        //dummy data, will need to get User's daily happiness scores for the 7 day interval
-        double[][] data = { {1, 2, 3, 4, 5, 6, 7,}, {8, 6, 7, 5, 3, 2, 4} };
+        double[][] data = { {1, 2, 3, 4, 5, 6, 7,}, hapinesslevels};
         ds.addSeries("Happiness Progression", data);
         return ds;
     }
