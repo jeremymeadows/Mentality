@@ -3,6 +3,9 @@ package Mentality;
 import Mentality.components.Database;
 import Mentality.components.MenuBar;
 import Mentality.components.User;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.ResultSet;
@@ -90,6 +93,7 @@ public class Runner extends Thread implements Runnable {
     public void run() {
         frame = new JFrame("Mentality");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         try {
             if (db != null) {
                 cleanup();
@@ -97,6 +101,8 @@ public class Runner extends Thread implements Runnable {
             initDB();
             connecting.release();
             System.err.println("connected to database");
+            ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+
         } catch (SQLException ex) {
             System.err.println("cannot establish connection to database");
             System.exit(1);

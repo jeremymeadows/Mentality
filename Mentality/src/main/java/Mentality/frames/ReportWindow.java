@@ -1,30 +1,23 @@
 package Mentality.frames;
 
-import Mentality.components.Chart;
+import Mentality.DomainLayer.ReportObj;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static Mentality.utils.CustomUtilities.ColorPalette.mainColor;
-import static Mentality.utils.CustomUtilities.center;
+/**********************************
+ * singleton design pattern
+ **********************************/
 
-public class Report extends JDialog {
-    //default dummy values
-    Double avgHappiness = 8.2;
-    String bestActivity = "Software Engineering";
-    String worstActivity = "Isolation";
-    String bestPerson = "Cerny";
-    String worstPerson = "Perez Hilton";
-    String bestDay = "Monday";
-    String worstDay = "Tuesday";
-
-    private static final long serialVersionUID = 2L;
+public class ReportWindow extends JDialog {
     JPanel topPanel;
+    ReportObj reportObj;
 
-    public Report(JFrame parent, String title) {
+    public ReportWindow(JFrame parent, String title, ReportObj reportObj) {
         super(parent, title);
+        this.reportObj = reportObj;
 
         //panel to hold all panels
         setLayout(new GridBagLayout());
@@ -55,7 +48,7 @@ public class Report extends JDialog {
         gc.weighty = 1;
         add(topPanel, gc);
         // set action listener on the button
-        button.addActionListener(new Report.MyActionListener());
+        button.addActionListener(new ReportWindow.MyActionListener());
         gc.gridx = 0;
         gc.gridy = 1;
         gc.weightx = .5;
@@ -76,24 +69,43 @@ public class Report extends JDialog {
         JTextField text = new JTextField ("Average happiness:");
         text.setEditable(false);
         labelPanel.add(text);
-        text = new JTextField ("Activity that puts you in the best mood:");
+        text = new JTextField ("Average sadness:");
         text.setEditable(false);
         labelPanel.add(text);
-        text = new JTextField ("Activity that puts you in the worst mood:");
+        text = new JTextField ("Average stress:");
         text.setEditable(false);
         labelPanel.add(text);
-        text = new JTextField ("Person that puts you in the best mood:");
+        text = new JTextField ("Best workout(s):");
         text.setEditable(false);
         labelPanel.add(text);
-        text = new JTextField ("Person that puts you in the worst mood:");
+        text = new JTextField ("Best workout(s) mood of:");
         text.setEditable(false);
         labelPanel.add(text);
-        text = new JTextField ("Best day of the week:");
+        text = new JTextField ("Worst workout(s):");
         text.setEditable(false);
         labelPanel.add(text);
-        text = new JTextField ("Worst day of the week:");
+        text = new JTextField ("Worst workout(s) mood:");
         text.setEditable(false);
         labelPanel.add(text);
+        text = new JTextField ("Best person(s):");
+        text.setEditable(false);
+        labelPanel.add(text);
+        text = new JTextField ("Best person(s) mood:");
+        text.setEditable(false);
+        labelPanel.add(text);
+        text = new JTextField ("Worst person(s):");
+        text.setEditable(false);
+        labelPanel.add(text);
+        text = new JTextField ("Worst person(s) mood:");
+        text.setEditable(false);
+        labelPanel.add(text);
+        text = new JTextField ("Average sleep duration:");
+        text.setEditable(false);
+        labelPanel.add(text);
+        text = new JTextField ("Average sleep quality:");
+        text.setEditable(false);
+        labelPanel.add(text);
+
         topPanel.add(labelPanel);
     }
 
@@ -103,43 +115,62 @@ public class Report extends JDialog {
         resultsPanel.setLayout(new GridLayout(0, 1));
         resultsPanel.setBackground(new Color(180, 180, 200));
 
+        //calculate the report values
+        reportObj.averageMoods();
+
         // Add labels to resultsPanel
-        JTextField text = new JTextField ((String.valueOf(avgHappiness)));
+        JTextField text = new JTextField ((String.valueOf(reportObj.getAverageHappiness())));
         text.setEditable(false);
         resultsPanel.add(text);
-        text = new JTextField (bestActivity);
+
+        text = new JTextField ((String.valueOf(reportObj.getAverageSadness())));
         text.setEditable(false);
         resultsPanel.add(text);
-        text = new JTextField (worstActivity);
+
+        text = new JTextField ((String.valueOf(reportObj.getAverageStress())));
         text.setEditable(false);
         resultsPanel.add(text);
-        text = new JTextField (bestPerson);
+
+        text = new JTextField ((String.valueOf(reportObj.getBestWorkout())));
         text.setEditable(false);
         resultsPanel.add(text);
-        text = new JTextField (worstPerson);
+
+        text = new JTextField ((String.valueOf(reportObj.getWorkoutBestMood())));
         text.setEditable(false);
         resultsPanel.add(text);
-        text = new JTextField (bestDay);
+
+        text = new JTextField ((String.valueOf(reportObj.getWorstWorkout())));
         text.setEditable(false);
         resultsPanel.add(text);
-        text = new JTextField (worstDay);
+
+        text = new JTextField ((String.valueOf(reportObj.getWorkoutWorstMood())));
         text.setEditable(false);
         resultsPanel.add(text);
+
+        text = new JTextField ((String.valueOf(reportObj.getBestPerson())));
+        text.setEditable(false);
+        resultsPanel.add(text);
+
+        text = new JTextField ((String.valueOf(reportObj.getBestPersonMood())));
+        text.setEditable(false);
+        resultsPanel.add(text);
+
+        text = new JTextField ((String.valueOf(reportObj.getWorstPerson())));
+        text.setEditable(false);
+        resultsPanel.add(text);
+
+        text = new JTextField ((String.valueOf(reportObj.getWorstPersonMood())));
+        text.setEditable(false);
+        resultsPanel.add(text);
+
+        text = new JTextField ((String.valueOf(reportObj.getAvgSleepQ())));
+        text.setEditable(false);
+        resultsPanel.add(text);
+
+
         topPanel.add(resultsPanel);
 
     }
-
-    public void setReportValues(Double avgHappiness, String bestActivity, String worstActivity, String bestPerson,
-            String worstPerson, String bestDay, String worstDay){
-        this.avgHappiness = avgHappiness;
-        this.bestActivity = bestActivity;
-        this.worstActivity = worstActivity;
-        this.bestPerson = bestPerson;
-        this.worstPerson = worstPerson;
-        this.bestDay = bestDay;
-        this.worstDay = worstDay;
-    }
-
 
     // an action listener to be used when an action is performed
     // (e.g. button is pressed)

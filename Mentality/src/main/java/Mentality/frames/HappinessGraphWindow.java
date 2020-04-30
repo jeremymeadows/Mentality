@@ -7,10 +7,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class HappinessGraph extends JDialog {
-    private static final long serialVersionUID = 1L;
+public class HappinessGraphWindow extends JDialog {
 
-    public HappinessGraph(JFrame parent, String title, String message) {
+    public HappinessGraphWindow(JFrame parent, String title, String message) {
         super(parent, title);
 
         System.out.println("creating the happiness graph window..");
@@ -39,7 +38,9 @@ public class HappinessGraph extends JDialog {
         setVisible(true);
 
         // Display chart
-        Chart chart = new Chart();
+        Chart chart = Chart.getInstance();
+        chart.run();
+
         getContentPane().add(chart.getChartPanel());
         chart.getChartPanel().setPreferredSize(new Dimension(200, 200));
 

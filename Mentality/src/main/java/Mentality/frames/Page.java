@@ -21,6 +21,7 @@ import static Mentality.utils.CustomUtilities.initJButton;
 public class Page extends JPanel implements ActionListener, FocusListener, KeyListener {
     private static final int BUTTONNUM = 5;
     User user;
+    CronScheduler cron = CronScheduler.getInstance();
 
     public Page(User u) {
         super();
@@ -116,7 +117,7 @@ public class Page extends JPanel implements ActionListener, FocusListener, KeyLi
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("survey")) {
             System.out.println ("Redirecting to Mood Survey");
-            JDialog MainFrame = new Mood(Runner.getFrame(),"Survey");
+            JDialog MainFrame = new MoodSurvey(Runner.getFrame(),"Survey");
             MainFrame.setSize(new Dimension(600, 600));
             MainFrame.setLocation (new Point (300, 230));
             MainFrame.getContentPane().setBackground(mainColor);
@@ -139,22 +140,20 @@ public class Page extends JPanel implements ActionListener, FocusListener, KeyLi
         if (e.getActionCommand().equals("report")) {
             System.out.println ("Opening Report");
 
-            JDialog reportDialogue = new Report(Runner.getFrame(),"Report");
+            JDialog reportDialogue = new ReportWindow(Runner.getFrame(),"Report", cron.getReportObj());
             reportDialogue.setSize(new Dimension(600, 600));
             reportDialogue.setLocation (new Point (300, 230));
             reportDialogue.getContentPane().setBackground(mainColor);
         }
         if (e.getActionCommand().equals("graph")) {
             System.out.println ("Opening Happiness Graph");
-            CronScheduler cs = new CronScheduler();
-            Date d = cs.getDate();
-            String date = d.toString();
-            JDialog graphDialogue = new HappinessGraph(Runner.getFrame(),"Happiness Graph", date);
+            JDialog graphDialogue = new HappinessGraphWindow(Runner.getFrame(),"Happiness Graph", new Date().toString());
 
             graphDialogue.setSize(new Dimension(1000, 600));
             graphDialogue.setLocation (new Point (300, 230));
             graphDialogue.setResizable(false);
         }
+
         if (e.getActionCommand().equals("home")){
             System.out.println ("Going back to the dashboard");
             Runner.getRunnerInstance().changeFrame(new Dashboard());
@@ -176,7 +175,7 @@ public class Page extends JPanel implements ActionListener, FocusListener, KeyLi
                     System.out.println("Added friends");
                     Runner.update("INSERT INTO friends values('" + Runner.getUser().getEmail() + "', '" + user.getEmail()+ "' );");
                     // this throws an exception, the resultsets are super finicky
-//                    JOptionPane.showMessageDialog(null, "Added " + r.getString(1) + "!");
+                    JOptionPane.showMessageDialog(null, "Added " + r.getString(1) + "!");
                 }
             } catch (SQLException ex) {
                 System.err.println(ex);

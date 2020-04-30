@@ -16,14 +16,14 @@ import java.util.Vector;
 import static Mentality.utils.CustomUtilities.ColorPalette.mainColor;
 import static Mentality.utils.CustomUtilities.initJButton;
 
-public class Person extends JDialog implements ActionListener {
+public class PersonSurvey extends JDialog implements ActionListener {
     JComboBox peopleList;
     JTextArea name;
     Vector<Object> users;
     DefaultComboBoxModel comboBoxModel;
     String friend;
 
-    public Person (JFrame parent, String title){
+    public PersonSurvey (JFrame parent, String title){
         super(parent, title);
         setLayout (new GridLayout(0, 1));
         setBackground(mainColor);

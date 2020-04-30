@@ -1,17 +1,14 @@
 package Mentality.frames;
 
 import Mentality.Runner;
+import Mentality.components.FriendTable;
 import Mentality.components.User;
 import Mentality.utils.FilterDemo;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Vector;
 
 import static Mentality.utils.CustomUtilities.ColorPalette.mainColor;
 

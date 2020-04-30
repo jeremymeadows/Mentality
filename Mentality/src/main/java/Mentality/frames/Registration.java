@@ -58,25 +58,33 @@ public class Registration extends JPanel implements Runnable, ActionListener, Fo
         add(center(cancel));
     }
 
+    public boolean Check_Email_Pass(String emailText, String nameFirstText, String nameLastText, char[] passText, char[] conf_passText)
+    {
+        if (!emailText.matches("\\b[A-Za-z0-9!#$%&'*+-/=?^_`.{|}~]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b")) {
+            System.err.println("invalid email");
+            return false;
+        }
+        if (!nameFirstText.matches("^[A-Z]?[a-z]+$")) {
+            System.err.println("please enter first and last name");
+            return false;
+        }
+        if (!nameLastText.matches("^[A-Z]?[a-z]+$")) {
+            System.err.println("please enter first and last name");
+            return false;
+        }
+        if (!Arrays.equals(passText, conf_passText)) {
+            System.err.println("passwords don't match");
+            return false;
+        }
+        return true;
+    }
+
     private void register() {
         boolean success = true;
         String passkey = Password.toKey(email.getText(), pass.getPassword());
-        if (!email.getText().matches("\\b[A-Za-z0-9!#$%&'*+-/=?^_`.{|}~]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b")) {
-            System.err.println("invalid email");
-            success = false;
-        }
-        if (!nameF.getText().matches("^[A-Z]?[a-z]+$")) {
-            System.err.println("please enter first and last name");
-            success = false;
-        }
-        if (!nameL.getText().matches("^[A-Z]?[a-z]+$")) {
-            System.err.println("please enter first and last name");
-            success = false;
-        }
-        if (!Arrays.equals(pass.getPassword(), confpass.getPassword())) {
-            System.err.println("passwords don't match");
-            success = false;
-        }
+        success = Check_Email_Pass(email.getText(),nameF.getText(),nameL.getText(),pass.getPassword(),confpass.getPassword());
+
+
 
         if (success && getRunnerInstance().validateRegistration(new User
                 (email.getText(), Password.hashPassword(passkey), nameF.getText(), nameL.getText(), uname.getText()))) {

@@ -1,8 +1,9 @@
-package Mentality.frames;
+package Mentality.components;
 
 import Mentality.Runner;
 import Mentality.components.MyTableModel;
 import Mentality.components.User;
+import Mentality.frames.Page;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;

@@ -14,8 +14,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Date;
 
-public class Dashboard extends JPanel implements ActionListener, FocusListener, KeyListener {
+
+public class Dashboard extends JPanel implements ActionListener {
     private static final int BUTTONNUM = 5;
+    CronScheduler cron = CronScheduler.getInstance();
 
     public Dashboard() {
         super();
@@ -101,7 +103,7 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("survey")) {
             System.out.println ("Redirecting to Mood Survey");
-            JDialog MainFrame = new Mood(Runner.getFrame(),"Survey");
+            JDialog MainFrame = new MoodSurvey(Runner.getFrame(),"Survey");
             MainFrame.setSize(new Dimension(600, 600));
             MainFrame.setLocation (new Point (300, 230));
             MainFrame.getContentPane().setBackground(mainColor);
@@ -125,17 +127,14 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
         if (e.getActionCommand().equals("report")) {
             System.out.println ("Opening Report");
 
-            JDialog reportDialogue = new Report(Runner.getFrame(),"Report");
+            JDialog reportDialogue = new ReportWindow(Runner.getFrame(),"Report", cron.getReportObj());
             reportDialogue.setSize(new Dimension(600, 600));
             reportDialogue.setLocation (new Point (300, 230));
             reportDialogue.getContentPane().setBackground(mainColor);
         }
         if (e.getActionCommand().equals("graph")) {
             System.out.println ("Opening Happiness Graph");
-            CronScheduler cs = new CronScheduler();
-            Date d = cs.getDate();
-            String date = d.toString();
-            JDialog graphDialogue = new HappinessGraph(Runner.getFrame(),"Happiness Graph", date);
+            JDialog graphDialogue = new HappinessGraphWindow(Runner.getFrame(),"Happiness Graph", new Date().toString());
 
             graphDialogue.setSize(new Dimension(1000, 600));
             graphDialogue.setLocation (new Point (300, 230));
@@ -143,15 +142,4 @@ public class Dashboard extends JPanel implements ActionListener, FocusListener, 
         }
     }
 
-    @Override
-    public void focusGained(FocusEvent e) {}
-    @Override
-    public void focusLost(FocusEvent e) {}
-
-    @Override
-    public void keyPressed(KeyEvent e) {}
-    @Override
-    public void keyReleased(KeyEvent e) {}
-    @Override
-    public void keyTyped(KeyEvent e) {}
 }
