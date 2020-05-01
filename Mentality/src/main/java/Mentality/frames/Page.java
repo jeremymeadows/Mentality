@@ -106,8 +106,6 @@ public class Page extends JPanel implements ActionListener, FocusListener, KeyLi
         addFriendButton.setActionCommand("add");
         addFriendButton.addActionListener(this);
 
-
-
         add(redirectPanel);
         add(postPanel);
         add(titlePanel);

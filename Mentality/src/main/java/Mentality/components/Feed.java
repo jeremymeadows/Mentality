@@ -6,9 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Feed extends JPanel{
     JPanel[] panels = new JPanel[3];
@@ -55,9 +53,10 @@ public class Feed extends JPanel{
             }
             for (int i = 0; i < 3; i++) {
                 if (!posts[i].name.matches("Robot #[123]")) {
-                    ResultSet r = Runner.query("SELECT username FROM users WHERE email = '" + posts[i].name + "';");
+                    ResultSet r = Runner.query("SELECT username, email FROM users WHERE email = '" + posts[i].name + "';");
                     r.next();
-                    posts[i].setUserame(r.getString("username"));
+                    posts[i].setEmail(r.getString("email"));
+                    posts[i].setUsername(r.getString("username"));
                 }
                 posts[i].buildPost();
                 panels[i].add(posts[i]);

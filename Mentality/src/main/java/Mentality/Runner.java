@@ -83,6 +83,7 @@ public class Runner extends Thread implements Runnable {
             getRunnerInstance().user = u;
         } catch (SQLException ex) {
             System.err.println("bad connection");
+            ex.printStackTrace();
             return false;
         }
         return true;
