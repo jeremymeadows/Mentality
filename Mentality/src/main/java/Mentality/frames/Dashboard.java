@@ -6,13 +6,15 @@ import Mentality.components.PostToWall;
 import Mentality.components.Search;
 import Mentality.utils.CronScheduler;
 
-import static Mentality.utils.CustomUtilities.*;
-import static Mentality.utils.CustomUtilities.ColorPalette.mainColor;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Date;
+
+import static Mentality.utils.CustomUtilities.ColorPalette.mainColor;
+import static Mentality.utils.CustomUtilities.center;
+import static Mentality.utils.CustomUtilities.initJButton;
 
 
 public class Dashboard extends JPanel implements ActionListener {
@@ -119,7 +121,7 @@ public class Dashboard extends JPanel implements ActionListener {
         }
         if (e.getActionCommand().equals("diary")) {
             System.out.println ("Redirecting to Diary");
-            JDialog DiaryFrame = new DiaryFrame(Runner.getFrame(),"Diary");
+            JDialog DiaryFrame = new DiaryFrame(Runner.getFrame(),"Previous Entries");
             DiaryFrame.setSize(new Dimension(600, 600));
             DiaryFrame.setLocation (new Point (300, 230));
             DiaryFrame.getContentPane().setBackground(mainColor);

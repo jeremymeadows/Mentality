@@ -19,6 +19,7 @@ public class Database {
     public ResultSet query(String q) throws SQLException {
         return st.executeQuery(q);
     }
+
     public int update(String q) throws SQLException {
         return st.executeUpdate(q);
     }
