@@ -1,0 +1,10 @@
+# files excluded from git
+
+# excludes IntelliJ settings files
+/.idea/
+# excludes Eclipse settings files
+/.settings/
+# excludes extra files that building the project generates
+/src/test/
+/target/
+/out/
