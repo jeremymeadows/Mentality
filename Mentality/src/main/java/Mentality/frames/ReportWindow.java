@@ -163,6 +163,10 @@ public class ReportWindow extends JDialog {
         text.setEditable(false);
         resultsPanel.add(text);
 
+        text = new JTextField ((String.valueOf(reportObj.getAvgSleep())));
+        text.setEditable(false);
+        resultsPanel.add(text);
+
         text = new JTextField ((String.valueOf(reportObj.getAvgSleepQ())));
         text.setEditable(false);
         resultsPanel.add(text);

@@ -87,6 +87,7 @@ public class ReportObj {
             averageSadness = sumSad / moodObjs.size();
             averageStress = sumStress / moodObjs.size();
         }
+        System.out.println ("average happiness " + averageHappiness);
 
     }
 

@@ -135,7 +135,7 @@ public class ReportMaker {
                 moodObj.setSadness(parseInt(rs.getString("sadness")));
                 moodObj.setStress(parseInt(rs.getString("stress")));
                 report.moodObjs.add(moodObj);
-//                System.out.println(moodObj.getHappiness() + " " + moodObj.getSadness() + " " + moodObj.getStress());
+                System.out.println(moodObj.getHappiness() + " " + moodObj.getSadness() + " " + moodObj.getStress());
             }
 
             rs.close();

@@ -115,6 +115,20 @@
             <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.toedter/jcalendar -->
+        <dependency>
+            <groupId>com.toedter</groupId>
+            <artifactId>jcalendar</artifactId>
+            <version>1.1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.toedter</groupId>
+            <artifactId>jcalendar</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <!-- Thanks for using https://jar-download.com -->
+
+
 
     </dependencies>
 
@@ -123,5 +137,6 @@
             <id>spring-releases</id>
             <url>https://repo.spring.io/release</url>
         </repository>
+
     </repositories>
 </project>
