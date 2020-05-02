@@ -1,6 +1,6 @@
 # files excluded from git
 
-# excludes IntelliJ settings files
+#excludes IntelliJ settings files
 /.idea/
 # excludes Eclipse settings files
 /.settings/
@@ -8,4 +8,3 @@
 /src/test/
 /target/
 /out/
-/bin/
