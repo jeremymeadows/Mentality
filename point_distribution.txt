@@ -1,8 +1,8 @@
 Point Dustribution:
 
-Micah Dadson: 8/5
-Jeremy Meadows: 8/5
-Shivana Bobbala: 7/5
-Iris: 7/5
-Joel Futagawa: 0/5
-Francis: 0/5
+Micah Dadson: 13/8
+Jeremy Meadows: 13/8
+Shivana Bobbala: 10/8
+Iris: 10/8
+Joel Futagawa: 2/8
+Francis: 0/8
